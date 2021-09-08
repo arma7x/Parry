@@ -38,6 +38,8 @@ class BaseController extends Controller
 	 */
 	protected $helpers = [];
 
+	protected $templateView;
+
 	protected $data = [
 		'title' => 'Parry',
 		'description' => 'CodeIgniter4 starter app',
@@ -61,12 +63,16 @@ class BaseController extends Controller
 		// E.g.: $this->session = \Config\Services::session();
 	}
 
-	public function render(Array $templates, Array $data = [])
+	public function render(Array $templateViews, Array $data = [])
 	{
-		foreach ($templates as $index => $name)
+		$data = array_merge($this->data, $data);
+		$content = '';
+		foreach ($templateViews as $index => $name)
 		{
-			echo view($name, array_merge($this->data, $data));
+			$content .= view($name, $data);
 		}
+		$data['__content__'] = $content;
+		echo view($this->templateView, $data);
 	}
 
 }

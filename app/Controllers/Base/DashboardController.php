@@ -37,8 +37,10 @@ class DashboardController extends BaseController
 	 */
 	protected $helpers = [];
 
+	protected $templateView = 'widgets/templates/dashboard_template';
+
 	protected $data = [
-		'title' => 'Parry Dashboard',
+		'title' => 'Dashboard',
 		'description' => 'CodeIgniter4 starter app',
 	];
 

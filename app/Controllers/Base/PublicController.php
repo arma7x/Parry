@@ -37,8 +37,10 @@ class PublicController extends BaseController
 	 */
 	protected $helpers = [];
 
+	protected $templateView = 'widgets/templates/public_template';
+
 	protected $data = [
-		'title' => 'Parry Public',
+		'title' => 'Public',
 		'description' => 'CodeIgniter4 starter app',
 	];
 
