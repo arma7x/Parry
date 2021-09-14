@@ -1,5 +1,5 @@
 {
-    "name": "Parry",
+    "title": "parry",
     "type": "project",
     "description": "The CodeIgniter framework v4",
     "homepage": "https://codeigniter.com",
@@ -12,7 +12,8 @@
         "ext-mbstring": "*",
         "kint-php/kint": "^3.3",
         "laminas/laminas-escaper": "^2.8",
-        "psr/log": "^1.1"
+        "psr/log": "^1.1",
+        "kreait/firebase-php": "^5.23"
     },
     "require-dev": {
         "codeigniter/coding-standard": "^1.1",

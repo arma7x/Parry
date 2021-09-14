@@ -3,6 +3,7 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseService;
+use Kreait\Firebase\Factory;
 
 /**
  * Services Configuration file.
@@ -19,13 +20,8 @@ use CodeIgniter\Config\BaseService;
  */
 class Services extends BaseService
 {
-	// public static function example($getShared = true)
-	// {
-	//     if ($getShared)
-	//     {
-	//         return static::getSharedInstance('example');
-	//     }
-	//
-	//     return new \CodeIgniter\Example();
-	// }
+		public static function firebase($getShared = true): Factory
+		{
+			return (new Factory)->withServiceAccount(urldecode(env("FIREBASE_CREDENTIALS")));
+		}
 }
