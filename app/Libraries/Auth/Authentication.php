@@ -3,12 +3,14 @@
 namespace App\Libraries\Auth;
 
 use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Session\SessionInterface;
 
 class Authentication
 {
 
 	private $db;
 	private $tableName = 'users';
+	private $cookieName = 'auth';
 
 	public function __construct(BaseConnection $db)
 	{
@@ -25,6 +27,7 @@ class Authentication
 
 	public static function PERMISSION(): ARRAY {
 		return [
+			'' => 'L_PERMISSION',
 			'0' => 'YES',
 			'1' => 'NO',
 		];
@@ -99,31 +102,23 @@ class Authentication
 
 	public function updateUser($uid, $data)
 	{
-		return$this->db->table($this->tableName)->set($data)->where('id', $uid)->update();
+		return $this->db->table($this->tableName)->set($data)->where('id', $uid)->update();
 	}
 
 	public function deleteUser($uid): BOOL
 	{
 	}
 
-	public function updatePassword($uid, $oldPassword, $newPassword)
+	public function updatePassword(Array $user, $oldPassword, $newPassword)
 	{
-		$user = $this->findUser(['id' => $uid], 'password_hash');
-		if ($user === NULL) {
-			throw new \Exception('$UID not exist');
-		}
 		if ($this->verifyPassword($oldPassword, $user['password_hash'])) {
 			$password_hash = password_hash($this->generatePasswordSafeLength($newPassword), TRUE);
-			return $this->updateUser($uid, ['password_hash' => $password_hash]);
+			return $this->updateUser($user['id'], ['password_hash' => $password_hash]);
 		} else {
-			throw new \Exception('Old password does not match');
+			throw new \Exception('Old password is incorrect');
 		}
 	}
 
-	// create_permission
-	// read_permission
-	// update_permission
-	// delete_permission
 	public function hasPermission($uid, $type, $value = 1): BOOL
 	{
 		$user = $this->findUser(['id' => $uid], $type);
@@ -133,12 +128,46 @@ class Authentication
 		return (int) $user[$type] === $value;
 	}
 
-	public function login($username, $password): STRING
+	public function isLoggedIn(SessionInterface $session)
 	{
-		// password_verify($this->generatePasswordSafeLength('1234567890'), $current_password)
+		$uid = $session->get('uid');
+		if ($uid === NULL) {
+			return FALSE;
+		}
+		$user = $this->findUser(['id' => $uid], 'id, username, password_hash, email, level, status, create_permission, read_permission, update_permission, delete_permission');
+		if ($user === NULL) {
+			$session->destroy();
+			return FALSE;
+		}
+		if ((int) $user['status'] !== 1) {
+			$session->destroy();
+			return FALSE;
+		}
+		return $user;
 	}
 
-	public function logout()
+	public function login($username, $password, SessionInterface $session)
 	{
+		if ($this->isLoggedIn($session) !== FALSE) {
+			throw new \Exception('You already logged-in');
+		}
+		$user = $this->findUser(['username' => strtolower($username)], 'id, password_hash, status');
+		if ($user === NULL) {
+			throw new \Exception('User does not exist');
+		}
+		if ((int) $user['status'] !== 1) {
+			throw new \Exception('User was banned or inactive, reason: '. $this::STATUS()[$user['status']]);
+		}
+		if (!$this->verifyPassword($password, $user['password_hash'])) {
+			throw new \Exception('Login failed');
+		}
+		$session->set('uid', $user['id']);
+		return $session->get('uid');
+	}
+
+	public function logout($session): BOOL
+	{
+		$session->destroy();
+		return TRUE;
 	}
 }

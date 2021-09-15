@@ -7,6 +7,9 @@ $routes->setDefaultController('Dashboard');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
-$routes->setAutoRoute(true);
+//$routes->setAutoRoute(true);
 
 $routes->get('/', 'Dashboard::index');
+$routes->get('/login', 'Dashboard::login');
+$routes->get('/update_password', 'Dashboard::updatePassword');
+$routes->get('/logout', 'Dashboard::logout');

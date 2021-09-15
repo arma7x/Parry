@@ -231,7 +231,7 @@ class App extends BaseConfig
 	 *
 	 * @var boolean
 	 */
-	public $sessionRegenerateDestroy = false;
+	public $sessionRegenerateDestroy = true;
 
 	/**
 	 * --------------------------------------------------------------------------

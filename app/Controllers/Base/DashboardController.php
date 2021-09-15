@@ -59,7 +59,7 @@ class DashboardController extends BaseController
 		//--------------------------------------------------------------------
 		// Preload any models, libraries, etc, here.
 		//--------------------------------------------------------------------
-		// E.g.: $this->session = \Config\Services::session();
+		$this->session = \Config\Services::session();
 	}
 
 }
