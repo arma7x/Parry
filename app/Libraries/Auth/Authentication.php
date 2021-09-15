@@ -47,9 +47,9 @@ class Authentication
 	{
 		$builder = $this->db->table($this->tableName);
 		if (COUNT($filters) > 0) {
-			return $builder->where($filters)->limit($limit, $offset)->getCompiledSelect();
+			return $builder->where($filters)->limit($limit, $offset)->get();
 		} else {
-			return $builder->limit($limit, $offset)->getCompiledSelect();
+			return $builder->limit($limit, $offset)->get();
 		}
 	}
 
@@ -66,7 +66,12 @@ class Authentication
 	public function addUser($data) {
 		$builder = $this->db->table($this->tableName);
 		$uid = bin2hex(random_bytes(7));
-		$row = $builder->select('id')->where('id', $uid)->orWhere('username', strtolower($data['username']))->orWhere('email', strtolower($data['email']))->get()->getRowArray();
+		$row = $builder->select('id')
+					->where('id', $uid)
+					->orWhere('username', strtolower($data['username']))
+					->orWhere('email', strtolower($data['email']))
+					->get()
+					->getRowArray();
 		if ($row !== NULL) {
 			throw new \Exception('Duplicate id, username or email address');
 		}
@@ -84,7 +89,7 @@ class Authentication
 			'created_at' => time(),
 			'updated_at' => time(),
 		];
-		return $builder->set($fields)->getCompiledInsert(); // ->insert()
+		return $builder->set($fields)->insert();
 	}
 
 	public function verifyPassword($plainPassword, $passwordHash): BOOL
@@ -94,11 +99,7 @@ class Authentication
 
 	public function updateUser($uid, $data)
 	{
-		$builder = $this->db->table($this->tableName);
-		$builder->set($data);
-		$builder->where('id', $uid);
-		// return $builder->update();
-		return $builder->getCompiledUpdate();
+		return$this->db->table($this->tableName)->set($data)->where('id', $uid)->update();
 	}
 
 	public function deleteUser($uid): BOOL
@@ -119,12 +120,17 @@ class Authentication
 		}
 	}
 
-	public function hasPermission($uid, $type): BOOL
+	// create_permission
+	// read_permission
+	// update_permission
+	// delete_permission
+	public function hasPermission($uid, $type, $value = 1): BOOL
 	{
-		// create_permission
-		// read_permission
-		// update_permission
-		// delete_permission
+		$user = $this->findUser(['id' => $uid], $type);
+		if ($user === NULL) {
+			throw new \Exception('$UID not exist');
+		}
+		return (int) $user[$type] === $value;
 	}
 
 	public function login($username, $password): STRING

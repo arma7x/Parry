@@ -28,7 +28,10 @@ class Home extends Base\PublicController
 			//];
 			//var_dump($authenticator->addUser($data));
 			//var_dump($authenticator->verifyPassword('1234567890', $user['password_hash']));
-			var_dump($authenticator->updatePassword($user['id'], '1234567890', '1234567890'));
+			//var_dump($authenticator->updatePassword($user['id'], '1234567890', '1234567890'));
+			foreach(['create_permission', 'read_permission', 'update_permission', 'delete_permission'] as $type) {
+				var_dump($authenticator->hasPermission($user['id'], $type, 1));
+			}
 		} catch(\Exception $e) {
 			var_dump($e->getMessage());
 		}
