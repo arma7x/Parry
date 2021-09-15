@@ -80,12 +80,12 @@ firebase.auth().onAuthStateChanged((user) => {
   console.log(error)
 });
 
-function logout(self) {
+function logout() {
   axios.post('/firebase/remove_token')
   .finally(() => {
     firebase.auth().signOut()
     .then(() => {
-      window.location.reload();
+      window.location.href = "/";
     });
   })
 }

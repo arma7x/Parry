@@ -8,7 +8,31 @@ class Home extends Base\PublicController
 {
 	public function index()
 	{
-		$db = \Config\Database::connect();
+		try {
+			$db = \Config\Database::connect();
+			$authenticator = \Config\Services::authenticator();
+			//var_dump($authenticator->getAllUsers([], 10, 20));
+			//var_dump($authenticator->getAllUsers(['id' => 1], 10, 20));
+			$user = $authenticator->findUser(['id' => '8afceafda40a53']);
+			//var_dump($user);
+			//$data = [
+				//'username' => strtolower('test'),
+				//'email' => strtolower('test@email.com'),
+				//'password' => '1234567890',
+				//'level' => 255,
+				//'status' => 1,
+				//'create_permission' => 0,
+				//'read_permission' => 0,
+				//'update_permission' => 0,
+				//'delete_permission' => 0
+			//];
+			//var_dump($authenticator->addUser($data));
+			//var_dump($authenticator->verifyPassword('1234567890', $user['password_hash']));
+			var_dump($authenticator->updatePassword($user['id'], '1234567890', '1234567890'));
+		} catch(\Exception $e) {
+			var_dump($e->getMessage());
+		}
+		die;
 		$this->render(['public_content'], ['namespace' => get_parent_class($this)]);
 	}
 

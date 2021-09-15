@@ -4,6 +4,7 @@ namespace Config;
 
 use CodeIgniter\Config\BaseService;
 use Kreait\Firebase\Factory;
+use App\Libraries\Auth\Authentication;
 
 /**
  * Services Configuration file.
@@ -20,8 +21,14 @@ use Kreait\Firebase\Factory;
  */
 class Services extends BaseService
 {
-		public static function firebase($getShared = true): Factory
-		{
-			return (new Factory)->withServiceAccount(urldecode(env("FIREBASE_CREDENTIALS")));
-		}
+	public static function firebase(): Factory
+	{
+		return (new Factory)->withServiceAccount(urldecode(env("FIREBASE_CREDENTIALS")));
+	}
+
+	public static function authenticator(): Authentication
+	{
+		$db = \Config\Database::connect();
+		return new Authentication($db);
+	}
 }

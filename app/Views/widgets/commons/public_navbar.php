@@ -5,7 +5,7 @@
         <a id="firebaseUserName" class="nav-link d-none" aria-current="page" href="#"></a>
         <a class="nav-link active" aria-current="page" href="#">Home</a>
         <a id="firebaseLoginBtn" class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
-        <a id="firebaseLogoutBtn" class="nav-link d-none" href="#" onclick="logout(this);">Logout</a>
+        <a id="firebaseLogoutBtn" class="nav-link d-none" href="#" onclick="logout();">Logout</a>
       </nav>
     </div>
     </header>
