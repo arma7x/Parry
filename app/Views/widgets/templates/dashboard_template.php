@@ -2,6 +2,7 @@
 <html lang="en" class="h-100">
   <head>
     <?= view('widgets/commons/header', $this->data); ?>
+    <script src="/assets/js/app.js"></script>
   </head>
   <body class="d-flex h-100 text-center text-white bg-dark">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">

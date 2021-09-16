@@ -12,4 +12,4 @@ $routes->set404Override();
 $routes->get('/', 'Dashboard::index');
 $routes->get('/login', 'Dashboard::login');
 $routes->get('/update_password', 'Dashboard::updatePassword');
-$routes->get('/logout', 'Dashboard::logout');
+$routes->post('/logout', 'Dashboard::logout');

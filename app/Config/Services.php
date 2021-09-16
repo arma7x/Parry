@@ -5,6 +5,8 @@ namespace Config;
 use CodeIgniter\Config\BaseService;
 use Kreait\Firebase\Factory;
 use App\Libraries\Auth\Authentication;
+use CodeIgniter\Database\BaseConnection;
+use CodeIgniter\Session\SessionInterface;
 
 /**
  * Services Configuration file.
@@ -26,9 +28,8 @@ class Services extends BaseService
 		return (new Factory)->withServiceAccount(urldecode(env("FIREBASE_CREDENTIALS")));
 	}
 
-	public static function authenticator(): Authentication
+	public static function authenticator(BaseConnection $db, SessionInterface $session): Authentication
 	{
-		$db = \Config\Database::connect();
-		return new Authentication($db);
+		return new Authentication($db, $session);
 	}
 }

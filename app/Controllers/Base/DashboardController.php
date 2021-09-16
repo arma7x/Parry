@@ -59,7 +59,11 @@ class DashboardController extends BaseController
 		//--------------------------------------------------------------------
 		// Preload any models, libraries, etc, here.
 		//--------------------------------------------------------------------
+		$this->db = \Config\Database::connect();
 		$this->session = \Config\Services::session();
+		$this->authenticator = \Config\Services::authenticator($this->db, $this->session);
+		$this->user = $this->authenticator->isLoggedIn();
+		$this->data['__user__'] = $this->user;
 	}
 
 }

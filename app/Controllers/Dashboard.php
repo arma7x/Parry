@@ -7,10 +7,8 @@ class Dashboard extends Base\DashboardController
 	public function index()
 	{
 		try {
-			$authenticator = \Config\Services::authenticator();
 			//var_dump($authenticator->getAllUsers([], 10, 20));
 			//var_dump($authenticator->getAllUsers(['id' => 1], 10, 20));
-			$user = $authenticator->findUser(['id' => '8afceafda40a53']);
 			//var_dump($user);
 			//$data = [
 				//'username' => strtolower('test'),
@@ -28,19 +26,17 @@ class Dashboard extends Base\DashboardController
 				//var_dump($authenticator->hasPermission($user['id'], $type, 1));
 			//}
 			//var_dump();
-			var_dump($authenticator->isLoggedIn($this->session));
+			//var_dump($this->user);
 		} catch(\Exception $e) {
-			var_dump($e->getMessage());
+			//var_dump($e->getMessage());
 		}
-		die;
 		$this->render(['dashboard_content'], ['namespace' => get_parent_class($this)]);
 	}
 
 	public function login()
 	{
 		try {
-			$authenticator = \Config\Services::authenticator();
-			$uid = $authenticator->login('arma7x', '1234567890', $this->session);
+			$uid = $this->authenticator->login('arma7x', '1234567890');
 			return $this->response->setStatusCode(200)->setJSON(['message' => $uid]);
 		} catch(\Exception $e) {
 			return $this->response->setStatusCode(400)->setJSON(['message' => $e->getMessage()]);
@@ -50,12 +46,11 @@ class Dashboard extends Base\DashboardController
 	public function updatePassword()
 	{
 		try {
-			$authenticator = \Config\Services::authenticator();
-			$user = $authenticator->isLoggedIn($this->session);
+			$user = $this->authenticator->isLoggedIn();
 			if ($user === FALSE) {
 				return $this->response->setStatusCode(200)->setJSON(['message' => 'You are not logged in']);
 			}
-			$authenticator->updatePassword($user, '1234567890', '1234567890');
+			$this->authenticator->updatePassword($user, '1234567890', '1234567890');
 			return $this->response->setStatusCode(200)->setJSON(['message' => $user['id']]);
 		} catch(\Exception $e) {
 			return $this->response->setStatusCode(400)->setJSON(['message' => $e->getMessage()]);
@@ -64,8 +59,7 @@ class Dashboard extends Base\DashboardController
 
 	public function logout()
 	{
-		$authenticator = \Config\Services::authenticator();
-		$authenticator->logout($this->session);
+		$this->authenticator->logout();
 		return $this->response->setStatusCode(200)->setJSON(['message' => 'Ok']);
 	}
 

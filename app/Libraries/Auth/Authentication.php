@@ -9,12 +9,14 @@ class Authentication
 {
 
 	private $db;
+	private $session;
 	private $tableName = 'users';
 	private $cookieName = 'auth';
 
-	public function __construct(BaseConnection $db)
+	public function __construct(BaseConnection $db, SessionInterface $session)
 	{
 		$this->db = $db;
+		$this->session = $session;
 	}
 
 	public static function LEVEL(): ARRAY {
@@ -128,27 +130,27 @@ class Authentication
 		return (int) $user[$type] === $value;
 	}
 
-	public function isLoggedIn(SessionInterface $session)
+	public function isLoggedIn()
 	{
-		$uid = $session->get('uid');
+		$uid = $this->session->get('uid');
 		if ($uid === NULL) {
 			return FALSE;
 		}
 		$user = $this->findUser(['id' => $uid], 'id, username, password_hash, email, level, status, create_permission, read_permission, update_permission, delete_permission');
 		if ($user === NULL) {
-			$session->destroy();
+			$this->session->destroy();
 			return FALSE;
 		}
 		if ((int) $user['status'] !== 1) {
-			$session->destroy();
+			$this->session->destroy();
 			return FALSE;
 		}
 		return $user;
 	}
 
-	public function login($username, $password, SessionInterface $session)
+	public function login($username, $password)
 	{
-		if ($this->isLoggedIn($session) !== FALSE) {
+		if ($this->isLoggedIn($this->session) !== FALSE) {
 			throw new \Exception('You already logged-in');
 		}
 		$user = $this->findUser(['username' => strtolower($username)], 'id, password_hash, status');
@@ -161,13 +163,13 @@ class Authentication
 		if (!$this->verifyPassword($password, $user['password_hash'])) {
 			throw new \Exception('Login failed');
 		}
-		$session->set('uid', $user['id']);
-		return $session->get('uid');
+		$this->session->set('uid', $user['id']);
+		return $this->session->get('uid');
 	}
 
-	public function logout($session): BOOL
+	public function logout(): BOOL
 	{
-		$session->destroy();
+		$this->session->destroy();
 		return TRUE;
 	}
 }
