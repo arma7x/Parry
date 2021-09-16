@@ -9,7 +9,7 @@
         <?php if ($__user__ !== FALSE): ?>
         <a class="nav-link" aria-current="page" href="#" onclick="logoutDashboard();">Logout</a>
         <?php else: ?>
-        <a class="nav-link" aria-current="page" href="#">Login</a>
+        <a class="nav-link" aria-current="page" href="#" onclick="loginDashboard();">Login</a>
         <?PHP endif ;?>
       </nav>
     </div>

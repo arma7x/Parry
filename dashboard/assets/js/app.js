@@ -1,6 +1,13 @@
+function loginDashboard() {
+  axios.post('/login')
+  .then(() => {
+    window.location.href = "/";
+  });
+}
+
 function logoutDashboard() {
   axios.post('/logout')
-  .finally(() => {
+  .then(() => {
     window.location.href = "/";
   });
 }

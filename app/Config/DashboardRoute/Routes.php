@@ -10,6 +10,6 @@ $routes->set404Override();
 //$routes->setAutoRoute(true);
 
 $routes->get('/', 'Dashboard::index');
-$routes->get('/login', 'Dashboard::login');
-$routes->get('/update_password', 'Dashboard::updatePassword');
+$routes->post('/login', 'Dashboard::login');
+$routes->post('/update_password', 'Dashboard::updatePassword');
 $routes->post('/logout', 'Dashboard::logout');
