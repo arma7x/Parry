@@ -35,11 +35,13 @@ class Dashboard extends Base\DashboardController
 
 	public function login()
 	{
+		$json = $this->request->getJSON(true);
 		try {
-			$uid = $this->authenticator->login('arma7x', '1234567890');
+			$uid = $this->authenticator->login($json['username'] ?? null, $json['password'] ?? null);
 			return $this->response->setStatusCode(200)->setJSON(['message' => $uid]);
 		} catch(\Exception $e) {
-			return $this->response->setStatusCode(400)->setJSON(['message' => $e->getMessage()]);
+			// Send anonymous message instead of $e->getMessage()
+			return $this->response->setStatusCode(400)->setJSON(['message' => 'Login Error']);
 		}
 	}
 
