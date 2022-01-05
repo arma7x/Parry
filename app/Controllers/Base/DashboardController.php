@@ -64,6 +64,7 @@ class DashboardController extends BaseController
 		$this->authenticator = \Config\Services::authenticator($this->db, $this->session);
 		$this->user = $this->authenticator->isLoggedIn();
 		$this->data['__user__'] = $this->user;
+		$this->data['__app_js_ts__'] = filemtime(realpath(FCPATH.implode(DIRECTORY_SEPARATOR, ['', 'assets', 'js', 'app.js'])));
 	}
 
 }
