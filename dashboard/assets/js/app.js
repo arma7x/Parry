@@ -3,11 +3,7 @@ function loginDashboard() {
   var upass = document.getElementById('lg_password').value;
   if ((uname.length > 0 && upass.length > 0)) {
     const json = JSON.stringify({ username: uname, password: upass });
-    axios.post('/login', json, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    axios.post('/login', json, {headers: {'Content-Type': 'application/json'}})
     .then(() => {
       window.location.href = "/";
     })
