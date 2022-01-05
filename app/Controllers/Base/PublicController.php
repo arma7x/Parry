@@ -61,6 +61,7 @@ class PublicController extends BaseController
 		//--------------------------------------------------------------------
 		// E.g.: $this->session = \Config\Services::session();
 		$this->data['__app_js_ts__'] = filemtime(realpath(FCPATH.implode(DIRECTORY_SEPARATOR, ['', 'assets', 'js', 'app.js'])));
+		$this->data['__app_css_ts__'] = filemtime(realpath(FCPATH.implode(DIRECTORY_SEPARATOR, ['', 'assets', 'css', 'app.css'])));
 	}
 
 }
