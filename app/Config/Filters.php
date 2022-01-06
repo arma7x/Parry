@@ -6,6 +6,7 @@ use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Honeypot;
+use App\Filters\Dashboard;
 
 class Filters extends BaseConfig
 {
@@ -19,6 +20,12 @@ class Filters extends BaseConfig
 		'csrf'     => CSRF::class,
 		'toolbar'  => DebugToolbar::class,
 		'honeypot' => Honeypot::class,
+		'checkLoginStatus' => Dashboard\LoggedInFilter::class,
+		'checkMinLevel' => Dashboard\MinimumLevelFilter::class,
+		'hasCreatePerm' => Dashboard\CreatePermissionFilter::class,
+		'hasReadPerm' => Dashboard\ReadPermissionFilter::class,
+		'hasUpdatePerm' => Dashboard\UpdatePermissionFilter::class,
+		'hasDeletePerm' => Dashboard\DeletePermissionFilter::class,
 	];
 
 	/**

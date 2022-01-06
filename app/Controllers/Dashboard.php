@@ -33,6 +33,41 @@ class Dashboard extends Base\DashboardController
 		$this->render(['dashboard_content'], ['namespace' => get_parent_class($this)]);
 	}
 
+	public function testLoggedIn()
+	{
+		$this->render(['dashboard_content'], ['namespace' => __FUNCTION__]);
+	}
+
+	public function testGuest()
+	{
+		$this->render(['dashboard_content'], ['namespace' => __FUNCTION__]);
+	}
+
+	public function testLevel()
+	{
+		$this->render(['dashboard_content'], ['namespace' => __FUNCTION__]);
+	}
+
+	public function testCreate()
+	{
+		$this->render(['dashboard_content'], ['namespace' => __FUNCTION__]);
+	}
+
+	public function testRead()
+	{
+		$this->render(['dashboard_content'], ['namespace' => __FUNCTION__]);
+	}
+
+	public function testUpdate()
+	{
+		$this->render(['dashboard_content'], ['namespace' => __FUNCTION__]);
+	}
+
+	public function testDelete()
+	{
+		$this->render(['dashboard_content'], ['namespace' => __FUNCTION__]);
+	}
+
 	public function login()
 	{
 		$json = $this->request->getJSON(true);
@@ -50,7 +85,7 @@ class Dashboard extends Base\DashboardController
 		try {
 			$user = $this->authenticator->isLoggedIn();
 			if ($user === FALSE) {
-				return $this->response->setStatusCode(200)->setJSON(['message' => 'You are not logged in']);
+				return $this->response->setStatusCode(401)->setJSON(['message' => 'You are not logged in']);
 			}
 			$this->authenticator->updatePassword($user, '1234567890', '1234567890');
 			return $this->response->setStatusCode(200)->setJSON(['message' => $user['id']]);

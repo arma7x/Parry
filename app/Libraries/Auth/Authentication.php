@@ -30,15 +30,15 @@ class Authentication
 	public static function PERMISSION(): ARRAY {
 		return [
 			'' => 'L_PERMISSION',
-			'0' => 'YES',
-			'1' => 'NO',
+			'0' => 'L_NO',
+			'1' => 'L_YES',
 		];
 	}
 
 	public static function STATUS(): ARRAY {
 		return [
 			'' => 'L_STATUS',
-			'-1' => 'L_BAN',
+			'-1' => 'L_BANNED',
 			'0' => 'L_INACTIVE',
 			'1' => 'L_ACTIVE',
 		];
@@ -121,13 +121,24 @@ class Authentication
 		}
 	}
 
-	public function hasPermission($uid, $type, $value = 1): BOOL
+	public function validateMinLevel($uid, int $level): BOOL
 	{
-		$user = $this->findUser(['id' => $uid], $type);
+		$user = $this->findUser(['id' => $uid, 'level <=' => $level], 'level');
 		if ($user === NULL) {
-			throw new \Exception('$UID not exist');
+			return FALSE;
 		}
-		return (int) $user[$type] === $value;
+		return TRUE;
+	}
+
+	// $type: create, read, update, delete
+	public function hasPermission($uid, $type): BOOL
+	{
+		$type .= '_permission';
+		$user = $this->findUser(['id' => $uid, $type => 1], $type);
+		if ($user === NULL) {
+			return FALSE;
+		}
+		return TRUE;
 	}
 
 	public function isLoggedIn()

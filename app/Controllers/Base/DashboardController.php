@@ -62,7 +62,12 @@ class DashboardController extends BaseController
 		$this->db = \Config\Database::connect();
 		$this->session = \Config\Services::session();
 		$this->authenticator = \Config\Services::authenticator($this->db, $this->session);
-		$this->user = $this->authenticator->isLoggedIn();
+		$this->user = $request->fetchGlobal('__user__');
+		if (COUNT($this->user) === 0) {
+			$this->user = $this->authenticator->isLoggedIn();
+		} else if (COUNT($this->user) === 1) {
+			$this->user = FALSE;
+		}
 		$this->data['__user__'] = $this->user;
 		$this->data['__app_js_ts__'] = filemtime(realpath(FCPATH.implode(DIRECTORY_SEPARATOR, ['', 'assets', 'js', 'app.js'])));
 		$this->data['__app_css_ts__'] = filemtime(realpath(FCPATH.implode(DIRECTORY_SEPARATOR, ['', 'assets', 'css', 'app.css'])));
