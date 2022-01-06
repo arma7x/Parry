@@ -7,7 +7,7 @@ $routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
-//$routes->setAutoRoute(true);
+// $routes->setAutoRoute(true);
 
 $routes->get('/', 'Home::index');
 $routes->post('/firebase/submit_token', 'Home::submitToken');
