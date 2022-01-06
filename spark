@@ -12,6 +12,8 @@
  * this class mainly acts as a passthru to the framework itself.
  */
 
+define('ROUTE_FOLDER', 'DashboardRoute');
+define('BASE_URL', 'http://127.0.0.1/');
 define('SPARKED', true);
 
 /*
