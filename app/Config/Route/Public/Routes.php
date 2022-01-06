@@ -10,5 +10,5 @@ $routes->set404Override();
 // $routes->setAutoRoute(true);
 
 $routes->get('/', 'Home::index');
-$routes->post('/firebase/submit_token', 'Home::submitToken');
-$routes->post('/firebase/remove_token', 'Home::removeToken');
+$routes->post('/auth/submit-token', 'Home::submitToken');
+$routes->post('/auth/remove-token', 'Home::removeToken');

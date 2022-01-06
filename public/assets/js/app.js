@@ -42,7 +42,7 @@ firebase.auth().onAuthStateChanged((user) => {
     firebaseLogoutBtn.classList.remove('d-none');
     getUserToken()
     .then((token) => {
-      return axios.post('/firebase/submit_token', {token: token});
+      return axios.post('/auth/submit-token', {token: token});
     })
     .then((response) => {
       console.log(response.data.message);
@@ -55,7 +55,7 @@ firebase.auth().onAuthStateChanged((user) => {
       }
     });
   } else {
-    axios.post('/firebase/remove_token');
+    axios.post('/auth/remove-token');
     firebaseUserName.innerText = "";
     firebaseUserName.classList.add('d-none');
     firebaseLoginBtn.classList.remove('d-none');
@@ -81,7 +81,7 @@ firebase.auth().onAuthStateChanged((user) => {
 });
 
 function logoutFirebase() {
-  axios.post('/firebase/remove_token')
+  axios.post('/auth/remove-token')
   .finally(() => {
     firebase.auth().signOut()
     .then(() => {
