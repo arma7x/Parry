@@ -25,7 +25,7 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php'))
  * You will have access to the $routes object within that file without
  * needing to reload it.
  */
-if (file_exists(APPPATH . 'Config/' . ROUTE_FOLDER . '/Routes.php'))
+if (file_exists(APPPATH . 'Config/Route/' . ROUTE_FOLDER . '/Routes.php'))
 {
-	require APPPATH . 'Config/' . ROUTE_FOLDER . '/Routes.php';
+	require APPPATH . 'Config/Route/' . ROUTE_FOLDER . '/Routes.php';
 }

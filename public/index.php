@@ -1,7 +1,7 @@
 <?php
 
 // BASE_URL
-define('ROUTE_FOLDER', 'PublicRoute');
+define('ROUTE_FOLDER', 'Public');
 if (getenv('CI_ENVIRONMENT')) {
   define('BASE_URL', 'http://127.0.0.1:1006/');
 } else {
