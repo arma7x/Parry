@@ -7,6 +7,7 @@
         <?PHP endif ;?>
         <a class="nav-link active" aria-current="page" href="#">Home</a>
         <?php if ($__user__ !== FALSE): ?>
+        <a class="nav-link" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target="#updatePasswordModal">Update Password</a>
         <a class="nav-link" aria-current="page" href="#" onclick="logoutDashboard();">Logout</a>
         <?php else: ?>
         <a class="nav-link" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>

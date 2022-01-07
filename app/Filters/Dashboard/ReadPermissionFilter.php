@@ -19,7 +19,7 @@ class ReadPermissionFilter implements FilterInterface
           return Services::response()->setStatusCode(401)->setJSON(['message' => '401 Unauthorized']);
         if ((int) $user['read_permission'] !== 1)
           return Services::response()->setStatusCode(403)->setJSON(['message' => '403 Forbidden']);
-        $request->setGlobal('__user__', $user === FALSE ? [1] : $user);
+        $request->setGlobal('__user__', $user);
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
