@@ -82,13 +82,10 @@ class Dashboard extends Base\DashboardController
 
 	public function updatePassword()
 	{
+		$json = $this->request->getJSON(true);
 		try {
-			$user = $this->authenticator->isLoggedIn();
-			if ($user === FALSE) {
-				return $this->response->setStatusCode(401)->setJSON(['message' => 'You are not logged in']);
-			}
-			$this->authenticator->updatePassword($user, '1234567890', '1234567890');
-			return $this->response->setStatusCode(200)->setJSON(['message' => $user['id']]);
+			$this->authenticator->updatePassword($this->user, $json['old_password'] ?? null, $json['new_password'] ?? null);
+			return $this->response->setStatusCode(200)->setJSON(['message' => 'Success']);
 		} catch(\Exception $e) {
 			return $this->response->setStatusCode(400)->setJSON(['message' => $e->getMessage()]);
 		}

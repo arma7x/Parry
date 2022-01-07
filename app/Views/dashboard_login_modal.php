@@ -15,7 +15,7 @@
                     <input type="password" class="form-control" id="lg_password" placeholder="Password" required>
                     <label for="password">Password</label>
                   </div>
-                  <button class="w-100 btn-lg btn-primary" type="submit" onclick="loginDashboard();">Sign In</button>
+                  <button class="w-100 btn-lg btn-primary" type="submit" onclick="loginDashboard();">SUBMIT</button>
                 </form>
               </div>
             </div>

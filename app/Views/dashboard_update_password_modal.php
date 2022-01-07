@@ -8,14 +8,18 @@
               <div class="modal-body">
                 <form onsubmit="event.preventDefault();">
                   <div class="form-floating mb-2">
-                    <input type="text" class="form-control" id="lg_username" placeholder="Username" required>
-                    <label for="username">Username</label>
+                    <input type="password" class="form-control" id="new_password" placeholder="New Password" required>
+                    <label for="new_password">New Password</label>
                   </div>
                   <div class="form-floating mb-2">
-                    <input type="password" class="form-control" id="lg_password" placeholder="Password" required>
-                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="confirm_password" placeholder="Confirm Password" required>
+                    <label for="confirm_password">Confirm Password</label>
                   </div>
-                  <button class="w-100 btn-lg btn-primary" type="submit" onclick="loginDashboard();">Sign In</button>
+                  <div class="form-floating mb-2">
+                    <input type="password" class="form-control" id="old_password" placeholder="Old Password" required>
+                    <label for="old_password">Old Password</label>
+                  </div>
+                  <button class="w-100 btn-lg btn-primary" type="submit" onclick="updatePassword();">SUBMIT</button>
                 </form>
               </div>
             </div>

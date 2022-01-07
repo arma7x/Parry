@@ -10,9 +10,9 @@ $routes->set404Override();
 // $routes->setAutoRoute(true);
 
 $routes->get('/', 'Dashboard::index');
-$routes->post('/login', 'Dashboard::login');
-$routes->post('/update_password', 'Dashboard::updatePassword');
-$routes->post('/logout', 'Dashboard::logout');
+$routes->post('/auth/login', 'Dashboard::login');
+$routes->post('/auth/update_password', 'Dashboard::updatePassword');
+$routes->post('/auth/logout', 'Dashboard::logout');
 
 $routes->get('/test-logged-in', 'Dashboard::testLoggedIn', ['filter' => 'checkLoginStatus:1']);
 $routes->get('/test-guest', 'Dashboard::testGuest', ['filter' => 'checkLoginStatus:0']);
