@@ -6,6 +6,7 @@ class InternalUsers extends \App\Controllers\Base\DashboardController
 {
 	public function index()
 	{
+		return $this->render(['dashboard/main/index'], ['namespace' => __FUNCTION__]);
 		return $this->response->setStatusCode(200)->setJSON(['message' => __FUNCTION__]);
 	}
 

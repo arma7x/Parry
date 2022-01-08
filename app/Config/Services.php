@@ -7,6 +7,9 @@ use Kreait\Firebase\Factory;
 use App\Libraries\Auth\Authentication;
 use CodeIgniter\Database\BaseConnection;
 use CodeIgniter\Session\SessionInterface;
+use Config\Filters as FiltersConfig;
+use Config\Services as AppServices;
+use App\Libraries\Filters\Filters;
 
 /**
  * Services Configuration file.
@@ -31,5 +34,14 @@ class Services extends BaseService
 	public static function authenticator(BaseConnection $db, SessionInterface $session): Authentication
 	{
 		return new Authentication($db, $session);
+	}
+
+	public static function filters(?FiltersConfig $config = null, bool $getShared = true)
+	{
+		if ($getShared) {
+			return static::getSharedInstance('filters', $config);
+		}
+		$config = $config ?? config('Filters');
+		return new Filters($config, AppServices::request(), AppServices::response());
 	}
 }
