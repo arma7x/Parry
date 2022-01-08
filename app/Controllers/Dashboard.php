@@ -40,41 +40,6 @@ class Dashboard extends Base\DashboardController
 		$this->render(['dashboard/main/index'], ['namespace' => get_parent_class($this), 'menus' => $menus]);
 	}
 
-	public function testLoggedIn()
-	{
-		$this->render(['dashboard/main/index'], ['namespace' => __FUNCTION__]);
-	}
-
-	public function testGuest()
-	{
-		$this->render(['dashboard/main/index'], ['namespace' => __FUNCTION__]);
-	}
-
-	public function testLevel()
-	{
-		$this->render(['dashboard/main/index'], ['namespace' => __FUNCTION__]);
-	}
-
-	public function testCreate()
-	{
-		$this->render(['dashboard/main/index'], ['namespace' => __FUNCTION__]);
-	}
-
-	public function testRead()
-	{
-		$this->render(['dashboard/main/index'], ['namespace' => __FUNCTION__]);
-	}
-
-	public function testUpdate()
-	{
-		$this->render(['dashboard/main/index'], ['namespace' => __FUNCTION__]);
-	}
-
-	public function testDelete()
-	{
-		$this->render(['dashboard/main/index'], ['namespace' => __FUNCTION__]);
-	}
-
 	public function login()
 	{
 		$json = $this->request->getJSON(true);
