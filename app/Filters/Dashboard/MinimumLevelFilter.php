@@ -19,6 +19,7 @@ class MinimumLevelFilter implements FilterInterface
           return Services::response()->setStatusCode(401)->setJSON(['message' => '401 Unauthorized']);
         if (((int) $user['level'] <= (int) $arguments[0]) === FALSE)
           return Services::response()->setStatusCode(403)->setJSON(['message' => '403 Forbidden']);
+        $request->setGlobal('__user__', $user);
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
