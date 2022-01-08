@@ -8,7 +8,7 @@ class Home extends Base\PublicController
 {
 	public function index()
 	{
-		$this->render(['public_content'], ['namespace' => get_parent_class($this)]);
+		$this->render(['public/main/index'], ['namespace' => get_parent_class($this)]);
 	}
 
 	public function submitToken()
