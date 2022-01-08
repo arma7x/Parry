@@ -30,7 +30,14 @@ class Dashboard extends Base\DashboardController
 		} catch(\Exception $e) {
 			//var_dump($e->getMessage());
 		}
-		$this->render(['dashboard/main/index'], ['namespace' => get_parent_class($this)]);
+		$menus = [];
+		if ($this->user) {
+			$menus = [
+				['text' => 'Manage Internal Users', 'href' => '/internal-users'],
+				['text' => 'Manage Firebase Users', 'href' => '/firebase-users'],
+			];
+		}
+		$this->render(['dashboard/main/index'], ['namespace' => get_parent_class($this), 'menus' => $menus]);
 	}
 
 	public function testLoggedIn()

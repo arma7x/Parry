@@ -4,11 +4,13 @@
         <!-- <h4>Parent Class <?= $namespace; ?></h4> -->
         <div class="container">
           <div class="row">
-            <?php for($i=1;$i<=16;$i++): ?>
+            <?php foreach($menus as $menu): ?>
             <div class="m-0 p-0 col-xs-12 col-md-4 col-lg-3">
-              <div class="d-flex flex-column justify-content-center m-1 bg-light text-dark" style="height:140px;"><?= $i; ?> of 16</div>
+              <a href="<?= $menu['href']; ?>" class="d-flex flex-column justify-content-center m-1 bg-light text-dark" style="height:140px;">
+                <h4><?= $menu['text']; ?></h4>
+              </a>
             </div>
-            <?php endfor; ?>
+            <?php endforeach; ?>
           </div>
         </div>
         <?= view('dashboard/main/update_password_modal', $this->data); ?>
