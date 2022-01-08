@@ -14,7 +14,10 @@ class DeletePermissionFilter implements FilterInterface
         $this->db = \Config\Database::connect();
         $this->session = \Config\Services::session();
         $this->authenticator = \Config\Services::authenticator($this->db, $this->session);
-        $user = $this->authenticator->isLoggedIn();
+        $user = $request->fetchGlobal('__user__');
+        if (COUNT($user) === 0) {
+          $user = $this->authenticator->isLoggedIn();
+        }
         if ($user === FALSE)
           return Services::response()->setStatusCode(401)->setJSON(['message' => '401 Unauthorized']);
         if ((int) $user['delete_permission'] !== 1)
