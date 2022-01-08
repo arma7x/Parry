@@ -1,6 +1,6 @@
       <div class="container h-100">
         <?php if ($__user__ !== FALSE): ?>
-        <h1 class="mt-5">Parry Dashboard <?= CodeIgniter\CodeIgniter::CI_VERSION ?></h1>
+        <h1 class="mt-2">Parry Dashboard <?= CodeIgniter\CodeIgniter::CI_VERSION ?></h1>
         <!-- <h4>Parent Class <?= $namespace; ?></h4> -->
         <div class="container">
           <div class="row">
@@ -20,7 +20,7 @@
           });
         </script>
         <?php else: ?>
-        <h1 class="mt-5">Welcome to Parry Dashboard <?= CodeIgniter\CodeIgniter::CI_VERSION ?></h1>
+        <h1 class="mt-2">Welcome to Parry Dashboard <?= CodeIgniter\CodeIgniter::CI_VERSION ?></h1>
         <!-- <h4>Parent Class <?= $namespace; ?></h4> -->
         <?= view('dashboard/main/login_modal', $this->data); ?>
         <?PHP endif ;?>
