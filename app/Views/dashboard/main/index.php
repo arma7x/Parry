@@ -4,6 +4,7 @@
         <!-- <h4>Parent Class <?= $namespace; ?></h4> -->
         <div class="container">
           <div class="row">
+            <?php if (isset($menus)): ?>
             <?php foreach($menus as $menu): ?>
             <div class="m-0 p-0 col-xs-12 col-md-4 col-lg-3">
               <a href="<?= $menu['href']; ?>" class="d-flex flex-column justify-content-center m-1 bg-light text-dark" style="height:140px;">
@@ -11,6 +12,7 @@
               </a>
             </div>
             <?php endforeach; ?>
+            <?php endif; ?>
           </div>
         </div>
         <?= view('dashboard/main/update_password_modal', $this->data); ?>
