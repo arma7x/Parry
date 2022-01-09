@@ -10,5 +10,4 @@ $routes->set404Override();
 // $routes->setAutoRoute(true);
 
 $routes->get('/', 'Home::index');
-$routes->post('/auth/submit-token', 'Home::submitToken');
-$routes->post('/auth/remove-token', 'Home::removeToken');
+$routes->post('/auth/verify-token', 'Home::verifyToken', ['filter' => 'verifyToken']);

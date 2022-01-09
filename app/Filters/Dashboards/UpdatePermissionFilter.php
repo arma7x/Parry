@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filters\Dashboard;
+namespace App\Filters\Dashboards;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;

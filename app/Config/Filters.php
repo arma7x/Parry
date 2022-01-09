@@ -6,7 +6,8 @@ use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Honeypot;
-use App\Filters\Dashboard;
+use App\Filters\Dashboards;
+use App\Filters\Publics;
 
 class Filters extends BaseConfig
 {
@@ -20,12 +21,13 @@ class Filters extends BaseConfig
 		'csrf'     => CSRF::class,
 		'toolbar'  => DebugToolbar::class,
 		'honeypot' => Honeypot::class,
-		'checkLoginStatus' => Dashboard\LoggedInFilter::class,
-		'checkMinLevel' => Dashboard\MinimumLevelFilter::class,
-		'hasCreatePerm' => Dashboard\CreatePermissionFilter::class,
-		'hasReadPerm' => Dashboard\ReadPermissionFilter::class,
-		'hasUpdatePerm' => Dashboard\UpdatePermissionFilter::class,
-		'hasDeletePerm' => Dashboard\DeletePermissionFilter::class,
+		'checkLoginStatus' => Dashboards\LoggedInFilter::class,
+		'checkMinLevel' => Dashboards\MinimumLevelFilter::class,
+		'hasCreatePerm' => Dashboards\CreatePermissionFilter::class,
+		'hasReadPerm' => Dashboards\ReadPermissionFilter::class,
+		'hasUpdatePerm' => Dashboards\UpdatePermissionFilter::class,
+		'hasDeletePerm' => Dashboards\DeletePermissionFilter::class,
+		'verifyToken' => Publics\FirebaseTokenValidatorFilter::class,
 	];
 
 	/**

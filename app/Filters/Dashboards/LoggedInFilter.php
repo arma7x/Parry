@@ -1,28 +1,25 @@
 <?php
 
-namespace App\Filters\Dashboard;
+namespace App\Filters\Dashboards;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
 use Config\Services;
 
-class CreatePermissionFilter implements FilterInterface
+class LoggedInFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
         $this->db = \Config\Database::connect();
         $this->session = \Config\Services::session();
         $this->authenticator = \Config\Services::authenticator($this->db, $this->session);
-        $user = $request->fetchGlobal('__user__');
-        if (COUNT($user) === 0) {
-          $user = $this->authenticator->isLoggedIn();
-        }
-        if ($user === FALSE)
-          return Services::response()->setStatusCode(401)->setJSON(['message' => '401 Unauthorized']);
-        if ((int) $user['create_permission'] !== 1)
+        $user = $this->authenticator->isLoggedIn();
+        if ($user !== FALSE && (int) $arguments[0] === 0)
           return Services::response()->setStatusCode(403)->setJSON(['message' => '403 Forbidden']);
-        $request->setGlobal('__user__', $user);
+        if ($user === FALSE && (int) $arguments[0] === 1)
+          return Services::response()->setStatusCode(401)->setJSON(['message' => '401 Unauthorized']);
+        $request->setGlobal('__user__', $user === FALSE ? [1] : $user);
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)

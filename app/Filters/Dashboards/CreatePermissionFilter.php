@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Filters\Dashboard;
+namespace App\Filters\Dashboards;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
 use Config\Services;
 
-class MinimumLevelFilter implements FilterInterface
+class CreatePermissionFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
@@ -20,7 +20,7 @@ class MinimumLevelFilter implements FilterInterface
         }
         if ($user === FALSE)
           return Services::response()->setStatusCode(401)->setJSON(['message' => '401 Unauthorized']);
-        if (((int) $user['level'] <= (int) $arguments[0]) === FALSE)
+        if ((int) $user['create_permission'] !== 1)
           return Services::response()->setStatusCode(403)->setJSON(['message' => '403 Forbidden']);
         $request->setGlobal('__user__', $user);
     }
