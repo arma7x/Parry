@@ -88,8 +88,8 @@ function verifyToken() {
     console.log(response.data.message);
   })
   .catch((err) => {
-    if (typeof response === 'string') {
-      console.log(response);
+    if (typeof err === 'string') {
+      console.log(err);
     } else {
       console.log(err.response.data.message);
     }
