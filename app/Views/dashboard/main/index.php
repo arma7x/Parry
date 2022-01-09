@@ -6,9 +6,8 @@
           <div class="row">
             <?php if (isset($menus)): ?>
             <?php foreach($menus as $menu): ?>
-            <div class="m-0 p-0 col-xs-12 col-md-4 col-lg-3">
-              <a href="<?= $menu['href']; ?>" class="d-flex flex-column justify-content-center m-1 bg-light text-dark" style="height:140px;">
-                <h4><?= $menu['text']; ?></h4>
+            <div class="m-0 p-0 col-xs-12 col-md-4 col-lg-3" style="pointer:cursor;">
+              <a href="<?= $menu['href']; ?>" class="d-flex flex-column justify-content-center m-1 bg-light text-dark h4" style="height:140px;"><?= $menu['text']; ?>
               </a>
             </div>
             <?php endforeach; ?>
