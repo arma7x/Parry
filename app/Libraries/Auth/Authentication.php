@@ -48,13 +48,36 @@ class Authentication
 		return base64_encode(hash('sha384', $string, TRUE));
 	}
 
-	public function getAllUsers($filters = [], $limit = 10, $offset = 0)
+	public function getAllUsers($filters = [], $limit = 10, $page = 0)
 	{
+		$offset = $page - 1;
+		$builderCount = $this->db->table($this->tableName);
 		$builder = $this->db->table($this->tableName);
 		if (COUNT($filters) > 0) {
-			return $builder->where($filters)->limit($limit, $offset)->get();
+			foreach($filters as $n => $value) {
+				if ($value !== NULL && $value !== '' && !in_array($n, ['id', 'username', 'email'])) {
+					$builder->where($n, $value);
+					$builderCount->where($n, $value);
+				} else if ($value !== NULL && $value !== '' && in_array($n, ['id', 'username', 'email'])) {
+					$builder->like($n, $value);
+					$builderCount->like($n, $value);
+				}
+			}
+			$total = $builderCount->countAllResults();
+			return [
+				'result' => $builder->limit($limit, $offset)->get(),
+				'prev' => $offset === 0 ? $offset : $offset - 1,
+				'next' =>  $total > ($offset + 1) * $limit ? ($offset + 2) : 0,
+				'total' => $total,
+			];
 		} else {
-			return $builder->limit($limit, $offset)->get();
+			$total = $builderCount->countAll();
+			return [
+				'result' => $builder->limit($limit, $offset)->get(),
+				'prev' => $offset === 0 ? $offset : $offset - 1,
+				'next' => $total > ($offset + 1) * $limit ? ($offset + 2) : 0,
+				'total' => $total,
+			];
 		}
 	}
 
