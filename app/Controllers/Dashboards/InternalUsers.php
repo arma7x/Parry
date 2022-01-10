@@ -4,19 +4,11 @@ namespace App\Controllers\Dashboards;
 
 class InternalUsers extends \App\Controllers\Base\DashboardController
 {
+
 	public function index()
 	{
-		$filters = [];
-		$list = ['id', 'username', 'email', 'level', 'status', 'level', 'create_permission', 'read_permission', 'update_permission', 'delete_permission'];
-		foreach($list as $n) {
-			$value = $this->request->getGet($n);
-			if ($value !== NULL && $value !== '')
-				$filters[$n] = $value;
-		}
-		$page = (int) $this->request->getGet('page');
-		$page = $page <= 0 ? 1 : $page;
-		$result = $this->authenticator->getAllUsers($filters, 10, $page);
-		foreach ($result['result']->getResult() as $row) {
+		$result = $this->_search();
+		foreach ($result['result'] as $row) {
 			// var_dump($row);
 		}
 		//die;
@@ -26,8 +18,7 @@ class InternalUsers extends \App\Controllers\Base\DashboardController
 
 	public function get()
 	{
-		return $this->render(['dashboard/main/index'], ['namespace' => __FUNCTION__]);
-		return $this->response->setStatusCode(200)->setJSON(['message' => __FUNCTION__]);
+		return $this->response->setStatusCode(200)->setJSON($this->_search());
 	}
 
 	public function create()
@@ -77,6 +68,19 @@ class InternalUsers extends \App\Controllers\Base\DashboardController
 	{
 		return $this->render(['dashboard/main/index'], ['namespace' => __FUNCTION__]);
 		return $this->response->setStatusCode(200)->setJSON(['message' => __FUNCTION__]);
+	}
+
+	protected function _search() {
+		$filters = [];
+		$list = ['id', 'username', 'email', 'level', 'status', 'level', 'create_permission', 'read_permission', 'update_permission', 'delete_permission'];
+		foreach($list as $n) {
+			$value = $this->request->getGet($n);
+			if ($value !== NULL && $value !== '')
+				$filters[$n] = $value;
+		}
+		$page = (int) $this->request->getGet('page');
+		$page = $page <= 0 ? 1 : $page;
+		return $this->authenticator->getAllUsers($filters, 10, $page);
 	}
 
 }

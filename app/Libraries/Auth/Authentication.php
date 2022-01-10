@@ -65,7 +65,7 @@ class Authentication
 			}
 			$total = $builderCount->countAllResults();
 			return [
-				'result' => $builder->limit($limit, $offset)->get(),
+				'result' => $builder->limit($limit, $offset)->get()->getResult(),
 				'prev' => $offset === 0 ? $offset : $offset - 1,
 				'next' =>  $total > ($offset + 1) * $limit ? ($offset + 2) : 0,
 				'total' => $total,
@@ -73,7 +73,7 @@ class Authentication
 		} else {
 			$total = $builderCount->countAll();
 			return [
-				'result' => $builder->limit($limit, $offset)->get(),
+				'result' => $builder->limit($limit, $offset)->get()->getResult(),
 				'prev' => $offset === 0 ? $offset : $offset - 1,
 				'next' => $total > ($offset + 1) * $limit ? ($offset + 2) : 0,
 				'total' => $total,
