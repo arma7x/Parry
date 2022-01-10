@@ -38,35 +38,28 @@ class InternalUsers extends \App\Controllers\Base\DashboardController
 		]);
 		$data = [];
 		foreach ($validation->getRules() as $field => $_value) {
-			if (in_array($field, ['username', 'email']))
-				$data[$field] = strtolower($json[$field] ?? null);
-			else
-				$data[$field] = $json[$field] ?? null;
+			$data[$field] = $json[$field] ?? null;
 		}
 		var_dump($data);
 		$validation->run($data);
 		var_dump( $validation->getErrors());
 		die;
 		//var_dump($this->authenticator->addUser($data));
-		return $this->render(['dashboard/main/index'], ['namespace' => __FUNCTION__]);
 		return $this->response->setStatusCode(200)->setJSON(['message' => __FUNCTION__]);
 	}
 
 	public function update()
 	{
-		return $this->render(['dashboard/main/index'], ['namespace' => __FUNCTION__]);
 		return $this->response->setStatusCode(200)->setJSON(['message' => __FUNCTION__]);
 	}
 
 	public function updatePassword()
 	{
-		return $this->render(['dashboard/main/index'], ['namespace' => __FUNCTION__]);
 		return $this->response->setStatusCode(200)->setJSON(['message' => __FUNCTION__]);
 	}
 
 	public function delete()
 	{
-		return $this->render(['dashboard/main/index'], ['namespace' => __FUNCTION__]);
 		return $this->response->setStatusCode(200)->setJSON(['message' => __FUNCTION__]);
 	}
 
