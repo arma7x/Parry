@@ -14,14 +14,6 @@
             <?php endif; ?>
           </div>
         </div>
-        <?= view('dashboard/main/update_password_modal', $this->data); ?>
-        <script type="text/javascript">
-          window.addEventListener("load", function() {
-            const headers = document.getElementsByTagName('header');
-            if (headers.length > 0)
-              headers[0].classList.remove('mb-auto');
-          });
-        </script>
         <?php else: ?>
         <h1 class="mt-2">Welcome to Parry Dashboard <?= CodeIgniter\CodeIgniter::CI_VERSION ?></h1>
         <!-- <h4>Parent Class <?= $namespace; ?></h4> -->
