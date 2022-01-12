@@ -1,6 +1,58 @@
       <div class="container h-100">
         <h1 class="mt-2">Internal Users</h1>
-        <div class="row">
+        <div>
+          <form class="row g-3">
+            <div class="col-sm">
+              <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+              </div>
+            </div>
+            <div class="col-sm">
+              <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+              </div>
+            </div>
+            <div class="col-sm">
+              <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+              </div>
+            </div>
+            <div class="col-sm">
+              <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+              </div>
+            </div>
+            <div class="col-sm">
+              <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+              </div>
+            </div>
+            <div class="col-sm">
+              <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+              </div>
+            </div>
+            <div class="col-sm">
+              <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+              </div>
+            </div>
+            <div class="col-sm">
+              <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="row mt-2 p-2">
           <table class="table table-bordered table-sm table-light text-dark">
             <thead>
               <tr>

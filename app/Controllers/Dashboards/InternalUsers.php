@@ -59,7 +59,7 @@ class InternalUsers extends \App\Controllers\Base\DashboardController
 
 	protected function _search() {
 		$filters = [];
-		$list = ['id', 'username', 'email', 'level', 'status', 'level', 'create_permission', 'read_permission', 'update_permission', 'delete_permission'];
+		$list = ['keyword', 'level', 'status', 'level', 'create_permission', 'read_permission', 'update_permission', 'delete_permission'];
 		foreach($list as $n) {
 			$value = $this->request->getGet($n);
 			if ($value !== NULL && $value !== '')

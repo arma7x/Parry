@@ -55,12 +55,12 @@ class Authentication
 		$builder = $this->db->table($this->tableName);
 		if (COUNT($filters) > 0) {
 			foreach($filters as $n => $value) {
-				if ($value !== NULL && $value !== '' && !in_array($n, ['id', 'username', 'email'])) {
+				if ($value !== NULL && $value !== '' && $n !== 'keyword') {
 					$builder->where($n, $value);
 					$builderCount->where($n, $value);
-				} else if ($value !== NULL && $value !== '' && in_array($n, ['id', 'username', 'email'])) {
-					$builder->like($n, $value);
-					$builderCount->like($n, $value);
+				} else if ($value !== NULL && $value !== '' && $n === 'keyword') {
+					$builder->groupStart()->orLike('id', $value)->orLike('username', $value)->orLike('email', $value)->groupEnd();
+					$builderCount->groupStart()->orLike('id', $value)->orLike('username', $value)->orLike('email', $value)->groupEnd();
 				}
 			}
 			$total = $builderCount->countAllResults();
