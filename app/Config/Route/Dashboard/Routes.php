@@ -15,7 +15,7 @@ $routes->post('/auth/update_password', 'Dashboard::updatePassword');
 $routes->post('/auth/logout', 'Dashboard::logout');
 
 $routes->get('/internal-users', 'Dashboards\InternalUsers::index', ['filter' => 'checkLoginStatus:1|checkMinLevel:0|hasReadPerm']);
-$routes->get('/internal-users/get', 'Dashboards\InternalUsers::get', ['filter' => 'checkMinLevel:0|hasReadPerm']);
+$routes->get('/internal-users/search', 'Dashboards\InternalUsers::search', ['filter' => 'checkMinLevel:0|hasReadPerm']);
 $routes->get('/internal-users/create', 'Dashboards\InternalUsers::create', ['filter' => 'checkMinLevel:0|hasCreatePerm']);
 $routes->get('/internal-users/update', 'Dashboards\InternalUsers::update', ['filter' => 'checkMinLevel:0|hasUpdatePerm']);
 $routes->get('/internal-users/update-password', 'Dashboards\InternalUsers::updatePassword', ['filter' => 'checkMinLevel:0|hasUpdatePerm']);

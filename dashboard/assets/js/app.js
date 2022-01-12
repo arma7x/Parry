@@ -48,3 +48,28 @@ function logoutDashboard() {
     window.location.href = "/";
   });
 }
+
+function searchUser() {
+  var p = {};
+  var url = new URL(document.location.origin);
+  var fields = ['s_keyword', 's_create_permission', 's_read_permission', 's_update_permission', 's_delete_permission', 's_status', 's_level'];
+  fields.forEach(k => {
+    var value = document.getElementById(k).value;
+    if (value.length > 0) {
+      const key = k.replace('s_', '');
+      p[key] = value;
+      url.searchParams.set(key, value);
+    }
+  });
+  if (Object.keys(p).length > 0)
+    window.history.pushState("/", "", window.location.pathname.replace(/\/$/, '') + '?' + url.searchParams.toString());
+  else
+    window.history.pushState("/", "", window.location.pathname.replace(/\/$/, ''));
+  axios.get('/internal-users/search', { params: p })
+  .then((res) => {
+    console.log(res.data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+}

@@ -10,7 +10,7 @@ class InternalUsers extends \App\Controllers\Base\DashboardController
 		return $this->render(['dashboard/internal_users/index'], ['title' => 'Internal Users', 'users' => $this->_search()]);
 	}
 
-	public function get()
+	public function search()
 	{
 		return $this->response->setStatusCode(200)->setJSON($this->_search());
 	}

@@ -9,11 +9,11 @@
                 <form onsubmit="event.preventDefault();">
                   <div class="form-floating mb-2">
                     <input type="text" class="form-control" id="lg_username" placeholder="Username" required>
-                    <label for="username">Username</label>
+                    <label for="lg_username">Username</label>
                   </div>
                   <div class="form-floating mb-2">
                     <input type="password" class="form-control" id="lg_password" placeholder="Password" required>
-                    <label for="password">Password</label>
+                    <label for="lg_password">Password</label>
                   </div>
                   <button class="w-100 btn-lg btn-primary" type="submit" onclick="loginDashboard();">SUBMIT</button>
                 </form>
