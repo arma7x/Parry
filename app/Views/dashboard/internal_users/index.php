@@ -6,7 +6,7 @@
               <div class="col-sm">
                 <div class="input-group-sm mb-3">
                   <label for="s_keyword" class="w-100 text-start">Keyword</label>
-                  <input id="s_keyword" type="text" class="form-control" aria-label="Keyword" aria-describedby="s_keyword">
+                  <input id="s_keyword" type="text" class="form-control" aria-label="Keyword" aria-describedby="s_keyword" placeholder="Search by id, email or username">
                 </div>
               </div>
               <div class="col-sm">
@@ -94,8 +94,7 @@
               <tr>
                 <th scope="col">#ID</th>
                 <th scope="col">Username</th>
-                <th scope="col">Level</th>
-                <th scope="col">Status</th>
+                <th scope="col">Metadata</th>
                 <th scope="col">Permission</th>
                 <th scope="col">Activity</th>
               </tr>
@@ -105,11 +104,25 @@
               <tr>
                 <th scope="row"><?= $u->id ?></th>
                 <td class="text-start">
-                  <div><?= $u->username ?></div>
-                  <div><?= $u->email ?></div>
+                  <div>
+                    <div style="font-size:90%;font-weight:bold;">Username</div>
+                    <div><?= $u->username ?></div>
+                  </div>
+                  <div class="mt-2">
+                    <div style="font-size:90%;font-weight:bold;">Email</div>
+                    <div><?= $u->email ?></div>
+                  </div>
                 </td>
-                <td><?= $u->level ?></td>
-                <td><?= $u->status ?></td>
+                <td class="text-start">
+                  <div>
+                    <div style="font-size:90%;font-weight:bold;">Level</div>
+                    <?= $u->level ?>
+                  </div>
+                  <div class="mt-2">
+                    <div style="font-size:90%;font-weight:bold;">Status</div>
+                    <?= $u->status ?>
+                  </div>
+                </td>
                 <td class="text-start">
                   <div>
                     <div style="font-size:90%;font-weight:bold;">Create</div>
