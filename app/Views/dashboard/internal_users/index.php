@@ -82,7 +82,7 @@
                 <label class="w-100"></label>
                 <div class="row mx-1">
                   <button class="w-50 btn-sm btn-primary" type="submit" onclick="searchUser();">SEARCH</button>
-                  <button class="w-50 btn-sm btn-primary" type="submit" onclick="searchUser();">INSERT</button>
+                  <button class="w-50 btn-sm btn-success" onclick="searchUser();">INSERT</button>
                 </div>
               </div>
             </div>

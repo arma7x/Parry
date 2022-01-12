@@ -2,6 +2,12 @@
 <html lang="en" class="h-100">
   <head>
     <?= view('widgets/commons/header', $this->data); ?>
+    <?php if ($__user__ !== FALSE): ?>
+    <script type="text/javascript">
+      <?php unset($__user__['password_hash']); ?>
+      const __USER__ = <?php echo json_encode($__user__); ?>;
+    </script>
+    <?PHP endif ;?>
   </head>
   <body class="d-flex h-100 text-center text-white bg-dark">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
