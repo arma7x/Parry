@@ -3,77 +3,88 @@
         <div>
           <form class="row g-3" onsubmit="event.preventDefault();">
             <div class="col-sm">
-              <div class="input-group-sm mb-3">
-                <label for="s_keyword" class="w-100 text-start">Keyword</label>
-                <input id="s_keyword" type="text" class="form-control" aria-label="Keyword" aria-describedby="s_keyword">
+              <div class="col-sm">
+                <div class="input-group-sm mb-3">
+                  <label for="s_keyword" class="w-100 text-start">Keyword</label>
+                  <input id="s_keyword" type="text" class="form-control" aria-label="Keyword" aria-describedby="s_keyword">
+                </div>
+              </div>
+              <div class="col-sm">
+                <div class="input-group-sm mb-3">
+                  <label for="s_level" class="w-100 text-start">Level</label>
+                  <select id="s_level" class="form-select form-select-sm" aria-label=".form-select-sm example" aria-describedby="s_level">
+                    <option value="">Omit</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </div>
               </div>
             </div>
             <div class="col-sm">
-              <div class="input-group-sm mb-3">
-                <label for="s_create_permission" class="w-100 text-start">Create</label>
-                <select id="s_create_permission" class="form-select form-select-sm" aria-label=".form-select-sm example" aria-describedby="s_create">
-                  <option value="">-</option>
-                  <option value="1">Yes</option>
-                  <option value="0">No</option>
-                </select>
+              <div class="col-sm">
+                <div class="input-group-sm mb-3">
+                  <label for="s_create_permission" class="w-100 text-start">Create Permission</label>
+                  <select id="s_create_permission" class="form-select form-select-sm" aria-label=".form-select-sm example" aria-describedby="s_create">
+                    <option value="">Omit</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm">
+                <div class="input-group-sm mb-3">
+                  <label for="s_read_permission" class="w-100 text-start">Read Permission</label>
+                  <select id="s_read_permission" class="form-select form-select-sm" aria-label=".form-select-sm example" aria-describedby="s_read">
+                    <option value="">Omit</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
               </div>
             </div>
             <div class="col-sm">
-              <div class="input-group-sm mb-3">
-                <label for="s_read_permission" class="w-100 text-start">Read</label>
-                <select id="s_read_permission" class="form-select form-select-sm" aria-label=".form-select-sm example" aria-describedby="s_read">
-                  <option value="">-</option>
-                  <option value="1">Yes</option>
-                  <option value="0">No</option>
-                </select>
+              <div class="col-sm">
+                <div class="input-group-sm mb-3">
+                  <label for="s_update_permission" class="w-100 text-start">Update Permission</label>
+                  <select id="s_update_permission" class="form-select form-select-sm" aria-label=".form-select-sm example" aria-describedby="s_update">
+                    <option value="">Omit</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm">
+                <div class="input-group-sm mb-3">
+                  <label for="s_delete_permission" class="w-100 text-start">Delete Permission</label>
+                  <select id="s_delete_permission" class="form-select form-select-sm" aria-label=".form-select-sm example" aria-describedby="s_delete">
+                    <option value="">Omit</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
               </div>
             </div>
             <div class="col-sm">
-              <div class="input-group-sm mb-3">
-                <label for="s_update_permission" class="w-100 text-start">Update</label>
-                <select id="s_update_permission" class="form-select form-select-sm" aria-label=".form-select-sm example" aria-describedby="s_update">
-                  <option value="">-</option>
-                  <option value="1">Yes</option>
-                  <option value="0">No</option>
-                </select>
+              <div class="col-sm">
+                <div class="input-group-sm mb-3">
+                  <label for="s_status" class="w-100 text-start">Status</label>
+                  <select id="s_status" class="form-select form-select-sm" aria-label=".form-select-sm example" aria-describedby="s_status">
+                    <option value="">Omit</option>
+                    <option value="-1">Banned</option>
+                    <option value="0">Inactive</option>
+                    <option value="1">Active</option>
+                  </select>
+                </div>
               </div>
-            </div>
-            <div class="col-sm">
-              <div class="input-group-sm mb-3">
-                <label for="s_delete_permission" class="w-100 text-start">Delete</label>
-                <select id="s_delete_permission" class="form-select form-select-sm" aria-label=".form-select-sm example" aria-describedby="s_delete">
-                  <option value="">-</option>
-                  <option value="1">Yes</option>
-                  <option value="0">No</option>
-                </select>
+              <div class="col-sm">
+                <label class="w-100"></label>
+                <div class="row mx-1">
+                  <button class="w-50 btn-sm btn-primary" type="submit" onclick="searchUser();">SEARCH</button>
+                  <button class="w-50 btn-sm btn-primary" type="submit" onclick="searchUser();">INSERT</button>
+                </div>
               </div>
-            </div>
-            <div class="col-sm">
-              <div class="input-group-sm mb-3">
-                <label for="s_status" class="w-100 text-start">Status</label>
-                <select id="s_status" class="form-select form-select-sm" aria-label=".form-select-sm example" aria-describedby="s_status">
-                  <option value="">-</option>
-                  <option value="-1">Banned</option>
-                  <option value="0">Inactive</option>
-                  <option value="1">Active</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-sm">
-              <div class="input-group-sm mb-3">
-                <label for="s_level" class="w-100 text-start">Level</label>
-                <select id="s_level" class="form-select form-select-sm" aria-label=".form-select-sm example" aria-describedby="s_level">
-                  <option value="">-</option>
-                  <option value="0">0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-sm">
-              <label></label>
-              <button class="w-100 btn-sm btn-primary" type="submit" onclick="searchUser();">SUBMIT</button>
             </div>
           </form>
         </div>
@@ -132,4 +143,14 @@
             </tbody>
           </table>
         </div>
+        <script type="text/javascript">
+          window.addEventListener("load", function() {
+            var url = new URL(document.location.toString());
+            url.searchParams.forEach((v, k) => {
+              var field = document.getElementById(`s_${k}`);
+              if (field != null)
+                field.value = v;
+            })
+          });
+        </script>
       </div>
