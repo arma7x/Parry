@@ -12,7 +12,7 @@
               <div class="col-sm">
                 <div class="input-group-sm mb-3">
                   <label for="s_level" class="w-100 text-start">Level</label>
-                  <select id="s_level" class="form-select form-select-sm" aria-label=".form-select-sm example" aria-describedby="s_level">
+                  <select id="s_level" class="form-select form-select-sm" aria-label="Level" aria-describedby="s_level">
                     <option value="">Omit</option>
                     <option value="0">0</option>
                     <option value="1">1</option>
@@ -26,7 +26,7 @@
               <div class="col-sm">
                 <div class="input-group-sm mb-3">
                   <label for="s_create_permission" class="w-100 text-start">Create Permission</label>
-                  <select id="s_create_permission" class="form-select form-select-sm" aria-label=".form-select-sm example" aria-describedby="s_create">
+                  <select id="s_create_permission" class="form-select form-select-sm" aria-label="Create Permission" aria-describedby="s_create">
                     <option value="">Omit</option>
                     <option value="1">Yes</option>
                     <option value="0">No</option>
@@ -36,7 +36,7 @@
               <div class="col-sm">
                 <div class="input-group-sm mb-3">
                   <label for="s_read_permission" class="w-100 text-start">Read Permission</label>
-                  <select id="s_read_permission" class="form-select form-select-sm" aria-label=".form-select-sm example" aria-describedby="s_read">
+                  <select id="s_read_permission" class="form-select form-select-sm" aria-label="Read Permission" aria-describedby="s_read">
                     <option value="">Omit</option>
                     <option value="1">Yes</option>
                     <option value="0">No</option>
@@ -48,7 +48,7 @@
               <div class="col-sm">
                 <div class="input-group-sm mb-3">
                   <label for="s_update_permission" class="w-100 text-start">Update Permission</label>
-                  <select id="s_update_permission" class="form-select form-select-sm" aria-label=".form-select-sm example" aria-describedby="s_update">
+                  <select id="s_update_permission" class="form-select form-select-sm" aria-label="Update Permission" aria-describedby="s_update">
                     <option value="">Omit</option>
                     <option value="1">Yes</option>
                     <option value="0">No</option>
@@ -58,7 +58,7 @@
               <div class="col-sm">
                 <div class="input-group-sm mb-3">
                   <label for="s_delete_permission" class="w-100 text-start">Delete Permission</label>
-                  <select id="s_delete_permission" class="form-select form-select-sm" aria-label=".form-select-sm example" aria-describedby="s_delete">
+                  <select id="s_delete_permission" class="form-select form-select-sm" aria-label="Delete Permission" aria-describedby="s_delete">
                     <option value="">Omit</option>
                     <option value="1">Yes</option>
                     <option value="0">No</option>
@@ -70,7 +70,7 @@
               <div class="col-sm">
                 <div class="input-group-sm mb-3">
                   <label for="s_status" class="w-100 text-start">Status</label>
-                  <select id="s_status" class="form-select form-select-sm" aria-label=".form-select-sm example" aria-describedby="s_status">
+                  <select id="s_status" class="form-select form-select-sm" aria-label="Status" aria-describedby="s_status">
                     <option value="">Omit</option>
                     <option value="-1">Banned</option>
                     <option value="0">Inactive</option>
@@ -81,8 +81,8 @@
               <div class="col-sm">
                 <label class="w-100"></label>
                 <div class="row mx-1">
-                  <button class="w-50 btn-sm btn-primary" type="submit" onclick="searchUser();">SEARCH</button>
-                  <button class="w-50 btn-sm btn-success" onclick="searchUser();">INSERT</button>
+                  <button class="w-50 btn-sm btn-primary" type="submit" onclick="searchUser(this);" data-page="1">SEARCH</button>
+                  <button class="w-50 btn-sm btn-success">INSERT</button>
                 </div>
               </div>
             </div>
@@ -142,6 +142,20 @@
               <?php endforeach; ?>
             </tbody>
           </table>
+        </div>
+        <div class="container">
+          <div class="row">
+          <button id="s_prev_page" <?= (int) $users['prev_page'] === 0 ? 'disabled ' : '' ?>type="button" class="col btn btn-primary btn-sm" onclick="searchUser(this);" data-page="<?= $users['prev_page']; ?>">Prev</button>
+          <div class="col input-group input-group-sm">
+            <span class="input-group-text">Page</span>
+            <select id="s_current_page" class="form-select form-select-sm" onchange="searchUser(this);">
+              <?php for($i = 1;$i <= (int) (ceil((float) $users['total']/ (float) $users['per_page']));$i++): ?>
+              <option value="<?= $i; ?>"<?= (int) $users['current_page'] === $i ? ' selected' : '' ?> onclick="searchUser(this);"><?= $i; ?></option>
+              <?php endfor; ?>
+            </select>
+          </div>
+          <button id="s_next_page" <?= (int) $users['next_page'] === 0 ? 'disabled ' : '' ?>type="button" class="col btn btn-primary btn-sm" onclick="searchUser(this);" data-page="<?= $users['next_page']; ?>">Next</button>
+          </div>
         </div>
         <script type="text/javascript">
           window.addEventListener("load", function() {

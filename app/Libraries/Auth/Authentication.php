@@ -48,7 +48,7 @@ class Authentication
 		return base64_encode(hash('sha384', $string, TRUE));
 	}
 
-	public function getAllUsers($filters = [], $limit = 10, $page = 0)
+	public function getAllUsers($filters = [], $limit = 10, $page = 1)
 	{
 		$offset = $page - 1;
 		$builderCount = $this->db->table($this->tableName);
@@ -65,17 +65,21 @@ class Authentication
 			}
 			$total = $builderCount->countAllResults();
 			return [
-				'result' => $builder->limit($limit, $offset)->get()->getResult(),
-				'prev' => $offset === 0 ? $offset : $offset - 1,
-				'next' =>  $total > ($offset + 1) * $limit ? ($offset + 2) : 0,
+				'result' => $builder->limit($limit, $offset*$limit)->get()->getResult(),
+				'prev_page' => $offset === 0 ? 0 : $page - 1,
+				'current_page' => $page,
+				'next_page' =>  $total > ($offset + 1) * $limit ? ($page + 1) : 0,
+				'per_page' => $limit,
 				'total' => $total,
 			];
 		} else {
 			$total = $builderCount->countAll();
 			return [
-				'result' => $builder->limit($limit, $offset)->get()->getResult(),
-				'prev' => $offset === 0 ? $offset : $offset - 1,
-				'next' => $total > ($offset + 1) * $limit ? ($offset + 2) : 0,
+				'result' => $builder->limit($limit, $offset*$limit)->get()->getResult(),
+				'prev_page' => $offset === 0 ? 0 : $page - 1,
+				'current_page' => $page,
+				'next_page' =>  $total > ($offset + 1) * $limit ? ($page + 1) : 0,
+				'per_page' => $limit,
 				'total' => $total,
 			];
 		}

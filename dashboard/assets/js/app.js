@@ -49,9 +49,10 @@ function logoutDashboard() {
   });
 }
 
-function searchUser() {
-  var p = {};
+function searchUser(scope) {
+  var p = { page: scope.getAttribute('data-page') || scope.value };
   var url = new URL(document.location.origin);
+  url.searchParams.set('page', p['page']);
   var fields = ['s_keyword', 's_create_permission', 's_read_permission', 's_update_permission', 's_delete_permission', 's_status', 's_level'];
   fields.forEach(k => {
     var value = document.getElementById(k).value;
@@ -68,6 +69,26 @@ function searchUser() {
   axios.get('/internal-users/search', { params: p })
   .then((res) => {
     console.log(res.data);
+    if (res.data.prev_page !== null) {
+      const btn = document.getElementById('s_prev_page');
+      btn.setAttribute('data-page', res.data.prev_page);
+      if (res.data.prev_page > 0)
+        btn.removeAttribute('disabled');
+      else
+        btn.setAttribute('disabled', true);
+    }
+    if (res.data.next_page !== null) {
+      const btn = document.getElementById('s_next_page');
+      btn.setAttribute('data-page', res.data.next_page);
+      if (res.data.next_page > 0)
+        btn.removeAttribute('disabled');
+      else
+        btn.setAttribute('disabled', true);
+    }
+    if (res.data.current_page !== null) {
+      const cur_page = document.getElementById('s_current_page');
+      cur_page.value = res.data.current_page;
+    }
   })
   .catch((err) => {
     console.log(err);
