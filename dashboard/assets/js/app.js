@@ -68,27 +68,10 @@ function searchUser(scope) {
     window.history.pushState("/", "", window.location.pathname.replace(/\/$/, ''));
   axios.get('/internal-users/search', { params: p })
   .then((res) => {
-    console.log(res.data);
-    if (res.data.prev_page !== null) {
-      const btn = document.getElementById('s_prev_page');
-      btn.setAttribute('data-page', res.data.prev_page);
-      if (res.data.prev_page > 0)
-        btn.removeAttribute('disabled');
-      else
-        btn.setAttribute('disabled', true);
-    }
-    if (res.data.next_page !== null) {
-      const btn = document.getElementById('s_next_page');
-      btn.setAttribute('data-page', res.data.next_page);
-      if (res.data.next_page > 0)
-        btn.removeAttribute('disabled');
-      else
-        btn.setAttribute('disabled', true);
-    }
-    if (res.data.current_page !== null) {
-      const cur_page = document.getElementById('s_current_page');
-      cur_page.value = res.data.current_page;
-    }
+    const tbody = document.getElementById('users_tbody');
+    tbody.innerHTML = res.data.tbody;
+    const pagination = document.getElementById('users_pagination');
+    pagination.innerHTML = res.data.pagination;
   })
   .catch((err) => {
     console.log(err);

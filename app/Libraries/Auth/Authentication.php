@@ -65,7 +65,7 @@ class Authentication
 			}
 			$total = $builderCount->countAllResults();
 			return [
-				'result' => $builder->limit($limit, $offset*$limit)->get()->getResult(),
+				'result' => $builder->limit($limit, $offset * $limit)->orderBy('created_at', 'ASC')->get()->getResult(),
 				'prev_page' => $offset === 0 ? 0 : $page - 1,
 				'current_page' => $page,
 				'next_page' =>  $total > ($offset + 1) * $limit ? ($page + 1) : 0,
@@ -75,7 +75,7 @@ class Authentication
 		} else {
 			$total = $builderCount->countAll();
 			return [
-				'result' => $builder->limit($limit, $offset*$limit)->get()->getResult(),
+				'result' => $builder->limit($limit, $offset * $limit)->orderBy('created_at', 'ASC')->get()->getResult(),
 				'prev_page' => $offset === 0 ? 0 : $page - 1,
 				'current_page' => $page,
 				'next_page' =>  $total > ($offset + 1) * $limit ? ($page + 1) : 0,

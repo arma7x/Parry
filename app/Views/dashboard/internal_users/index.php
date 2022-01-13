@@ -99,76 +99,13 @@
                 <th scope="col">Activity</th>
               </tr>
             </thead>
-            <tbody id="_iubody">
-              <?php foreach($users['result'] as $u): ?>
-              <tr>
-                <th scope="row"><?= $u->id ?></th>
-                <td class="text-start">
-                  <div>
-                    <div style="font-size:90%;font-weight:bold;">Username</div>
-                    <div><?= $u->username ?></div>
-                  </div>
-                  <div class="mt-2">
-                    <div style="font-size:90%;font-weight:bold;">Email</div>
-                    <div><?= $u->email ?></div>
-                  </div>
-                </td>
-                <td class="text-start">
-                  <div>
-                    <div style="font-size:90%;font-weight:bold;">Level</div>
-                    <?= $u->level ?>
-                  </div>
-                  <div class="mt-2">
-                    <div style="font-size:90%;font-weight:bold;">Status</div>
-                    <?= $u->status ?>
-                  </div>
-                </td>
-                <td class="text-start">
-                  <div>
-                    <div style="font-size:90%;font-weight:bold;">Create</div>
-                    <div><?= $u->create_permission ?></div>
-                  </div>
-                  <div class="mt-2">
-                    <div style="font-size:90%;font-weight:bold;">Read</div>
-                    <div><?= $u->read_permission ?></div>
-                  </div>
-                  <div class="mt-2">
-                    <div style="font-size:90%;font-weight:bold;">Update</div>
-                    <div><?= $u->update_permission ?></div>
-                  </div>
-                  <div class="mt-2">
-                    <div style="font-size:90%;font-weight:bold;">Delete</div>
-                    <div><?= $u->delete_permission ?></div>
-                  </div>
-                </td>
-                <td class="text-start">
-                  <div>
-                    <div style="font-size:90%;font-weight:bold;">Created At</div>
-                    <?= $u->created_at ?>
-                  </div>
-                  <div class="mt-2">
-                    <div style="font-size:90%;font-weight:bold;">Last Update</div>
-                    <?= $u->updated_at ?>
-                  </div>
-                </td>
-              </tr>
-              <?php endforeach; ?>
+            <tbody id="users_tbody">
+            <?= view('dashboard/internal_users/users_tbody_widget', $this->data); ?>
             </tbody>
           </table>
         </div>
-        <div class="container">
-          <div class="row">
-          <button id="s_prev_page" <?= (int) $users['prev_page'] === 0 ? 'disabled ' : '' ?>type="button" class="col btn btn-primary btn-sm" onclick="searchUser(this);" data-page="<?= $users['prev_page']; ?>">Prev</button>
-          <div class="col input-group input-group-sm">
-            <span class="input-group-text">Page</span>
-            <select id="s_current_page" class="form-select form-select-sm" onchange="searchUser(this);">
-              <?php for($i = 1;$i <= (int) (ceil((float) $users['total']/ (float) $users['per_page']));$i++): ?>
-              <option value="<?= $i; ?>"<?= (int) $users['current_page'] === $i ? ' selected' : '' ?> onclick="searchUser(this);"><?= $i; ?></option>
-              <?php endfor; ?>
-            </select>
-          </div>
-          <button id="s_next_page" <?= (int) $users['next_page'] === 0 ? 'disabled ' : '' ?>type="button" class="col btn btn-primary btn-sm" onclick="searchUser(this);" data-page="<?= $users['next_page']; ?>">Next</button>
-          </div>
+        <div  id="users_pagination" class="container row p-0 m-0">
+        <?= view('dashboard/internal_users/users_pagination_widget', $this->data); ?>
         </div>
         <script type="text/javascript">
           window.addEventListener("load", function() {
