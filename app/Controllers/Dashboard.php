@@ -26,7 +26,7 @@ class Dashboard extends Base\DashboardController
 			return $this->response->setStatusCode(200)->setJSON(['message' => $uid]);
 		} catch(\Exception $e) {
 			// Send anonymous message instead of $e->getMessage()
-			return $this->response->setStatusCode(400)->setJSON(['message' => 'Login Error']);
+			return $this->response->setStatusCode(400)->setJSON(['message' => 'Wrong password or invalid user']);
 		}
 	}
 
