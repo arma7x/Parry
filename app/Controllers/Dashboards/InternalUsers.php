@@ -13,8 +13,9 @@ class InternalUsers extends \App\Controllers\Base\DashboardController
 	public function search()
 	{
 		$result = $this->_search();
-		$result['tbody'] = view('dashboard/internal_users/users_tbody_widget', ['users' => $result]);
-		$result['pagination'] = view('dashboard/internal_users/users_pagination_widget', ['users' => $result]);
+		$data = ['users' => $result, '__user__' => $this->user];
+		$result['tbody'] = view('dashboard/internal_users/users_tbody_widget', $data);
+		$result['pagination'] = view('dashboard/internal_users/users_pagination_widget', $data);
 		return $this->response->setStatusCode(200)->setJSON($result);
 	}
 
