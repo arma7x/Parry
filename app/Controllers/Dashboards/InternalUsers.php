@@ -37,12 +37,17 @@ class InternalUsers extends \App\Controllers\Base\DashboardController
 		foreach ($validation->getRules() as $field => $_value) {
 			$data[$field] = $json[$field] ?? null;
 		}
-		var_dump($data);
 		$validation->run($data);
-		var_dump( $validation->getErrors());
-		die;
-		//var_dump($this->authenticator->addUser($data));
-		return $this->response->setStatusCode(200)->setJSON(['message' => __FUNCTION__]);
+		$errors = $validation->getErrors();
+		if (COUNT($errors) > 0) {
+			return $this->response->setStatusCode(400)->setJSON(['validation' => $errors]);
+		}
+		try {
+			$this->authenticator->addUser($data);
+			return $this->response->setStatusCode(200)->setJSON(['message' => 'Success']);
+		} catch(\Exception $e) {
+			return $this->response->setStatusCode(400)->setJSON(['message' => $e->getMessage()]);
+		}
 	}
 
 	public function update()

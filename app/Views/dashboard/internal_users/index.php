@@ -82,7 +82,7 @@
                 <label class="w-100"></label>
                 <div class="row mx-1">
                   <button class="w-50 btn-sm btn-primary" type="submit" onclick="searchUser(this);" data-page="1">SEARCH</button>
-                  <button class="w-50 btn-sm btn-success">INSERT</button>
+                  <button class="w-50 btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#createUserModal">CREATE</button>
                 </div>
               </div>
             </div>
@@ -107,6 +107,7 @@
         <div  id="users_pagination" class="container row p-0 m-0">
         <?= view('dashboard/internal_users/users_pagination_widget', $this->data); ?>
         </div>
+        <?= view('dashboard/internal_users/user_create_widget', $this->data); ?>
         <script type="text/javascript">
           window.addEventListener("load", function() {
             var url = new URL(document.location.toString());

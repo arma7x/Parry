@@ -77,3 +77,40 @@ function searchUser(scope) {
     console.log(err);
   });
 }
+
+function createUser() {
+  var formData = {}
+  const fields = ['c_username', 'c_email', 'c_password', 'c_create_permission', 'c_read_permission', 'c_update_permission', 'c_delete_permission', 'c_status', 'c_level'];
+  fields.forEach((k) => {
+    const key = k.replace('c_', '');
+    formData[key] = document.getElementById(k).value;
+  });
+  axios.post('/internal-users/create', formData)
+  .then((res) => {
+    if (res.data.message) {
+      alert(res.data.message);
+    }
+    window.location.reload();
+  })
+  .catch((err) => {
+    const validation = err.response.data.validation;
+    if (validation) {
+      fields.forEach((k) => {
+        const key = k.replace('c_', '');
+        const el = document.getElementById(k);
+        const txt = document.getElementById(`${k}_invalid`);
+        if (validation[key] != null && txt != null) {
+          el.classList.add('is-invalid');
+          txt.textContent = validation[key];
+        } else if (validation[key] == null && txt != null) {
+          el.classList.remove('is-invalid');
+          txt.textContent = '';
+        }
+      });
+    } else if (err.response.data.message){
+      alert(err.response.data.message);
+    } else {
+      alert('Error');
+    }
+  });
+}
