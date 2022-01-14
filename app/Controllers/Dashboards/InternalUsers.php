@@ -54,8 +54,6 @@ class InternalUsers extends \App\Controllers\Base\DashboardController
 	public function update()
 	{
 		$json = $this->request->getJSON(true);
-		//$json['id'] = '12ssss';
-		//$json['password'] = '12ssssssssssssssssss';
 		$validation = \Config\Services::validation();
 		$rules = [
 			'id' => ['label' => 'ID', 'rules' => 'required'],
@@ -83,10 +81,12 @@ class InternalUsers extends \App\Controllers\Base\DashboardController
 		$uid = $data['id'];
 		if ($this->user['id'] === $uid)
 			return $this->response->setStatusCode(403)->setJSON(['message' => 'Fail']);
-		if ($data['password'])
+		if (isset($data['password']))
 			$data['password'] = $this->authenticator->generatePasswordSafeLength($data['password']);
 		unset($data['id']);
-		return $this->response->setStatusCode(200)->setJSON(['message' => __FUNCTION__]);
+		if ($this->authenticator->updateUser($uid, $data))
+			return $this->response->setStatusCode(200)->setJSON(['message' => 'Success']);
+		return $this->response->setStatusCode(400)->setJSON(['message' => 'Fail']);
 	}
 
 	public function delete()
