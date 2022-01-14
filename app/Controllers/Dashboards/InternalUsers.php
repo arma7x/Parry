@@ -13,8 +13,9 @@ class InternalUsers extends \App\Controllers\Base\DashboardController
 	public function search()
 	{
 		$result = $this->_search();
-		$result['tbody'] = view('dashboard/internal_users/users_tbody_widget', ['users' => $result]);
-		$result['pagination'] = view('dashboard/internal_users/users_pagination_widget', ['users' => $result]);
+		$data = ['users' => $result, '__user__' => $this->user];
+		$result['tbody'] = view('dashboard/internal_users/users_tbody_widget', $data);
+		$result['pagination'] = view('dashboard/internal_users/users_pagination_widget', $data);
 		return $this->response->setStatusCode(200)->setJSON($result);
 	}
 
@@ -53,8 +54,11 @@ class InternalUsers extends \App\Controllers\Base\DashboardController
 	public function update()
 	{
 		$json = $this->request->getJSON(true);
+		//$json['id'] = '12ssss';
+		//$json['password'] = '12ssssssssssssssssss';
 		$validation = \Config\Services::validation();
-		$validation->setRules([
+		$rules = [
+			'id' => ['label' => 'ID', 'rules' => 'required'],
 			'password' => ['label' => 'Password', 'rules' => 'min_length[10]'],
 			'level' => ['label' => 'Level', 'rules' => 'less_than[256]'],
 			'status' => ['label' => 'Status', 'rules' => 'in_list[0,1]'],
@@ -62,18 +66,26 @@ class InternalUsers extends \App\Controllers\Base\DashboardController
 			'read_permission' => ['label' => 'Read Permission', 'rules' => 'in_list[0,1]'],
 			'update_permission' => ['label' => 'Update Permission', 'rules' => 'in_list[0,1]'],
 			'delete_permission' => ['label' => 'Delete Permission', 'rules' => 'in_list[0,1]'],
-		]);
+		];
+		$validation->setRule('id', $rules['id']['label'], $rules['id']['rules']);
 		$data = [];
-		foreach ($validation->getRules() as $field => $_value) {
-			$data[$field] = $json[$field] ?? null;
+		foreach ($rules as $field => $value) {
+			if (isset($json[$field])) {
+				$validation->setRule($field, $value['label'], $value['rules']);
+				$data[$field] = $json[$field];
+			}
 		}
 		$validation->run($data);
 		$errors = $validation->getErrors();
 		if (COUNT($errors) > 0) {
 			return $this->response->setStatusCode(400)->setJSON(['validation' => $errors]);
 		}
-		if ($this->user['id'] === $data['id'])
+		$uid = $data['id'];
+		if ($this->user['id'] === $uid)
 			return $this->response->setStatusCode(403)->setJSON(['message' => 'Fail']);
+		if ($data['password'])
+			$data['password'] = $this->authenticator->generatePasswordSafeLength($data['password']);
+		unset($data['id']);
 		return $this->response->setStatusCode(200)->setJSON(['message' => __FUNCTION__]);
 	}
 
