@@ -122,6 +122,10 @@ function createUser() {
   });
 }
 
+function updateUser(id, username, field, input_id) {
+  
+}
+
 function deleteUser(id, username) {
   if (!confirm(`Are you sure to remove ${username} ?`))
     return;
