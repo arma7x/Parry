@@ -42,11 +42,13 @@
                 <td class="text-start">
                   <div>
                     <div style="font-size:90%;font-weight:bold;">Created At</div>
-                    <?= $u->created_at ?>
+                    <span id="u_ca_<?= $u->id ?>"><?= $u->created_at ?></span>
+                    <script type="text/javascript">window.addEventListener("load", () => {localDateTime("u_ca_<?= $u->id ?>")});</script>
                   </div>
                   <div class="mt-2">
                     <div style="font-size:90%;font-weight:bold;">Last Update</div>
-                    <?= $u->updated_at ?>
+                    <span id="u_lu_<?= $u->id ?>"><?= $u->updated_at ?></span>
+                    <script type="text/javascript">window.addEventListener("load", () => {localDateTime("u_lu_<?= $u->id ?>")});</script>
                   </div>
                 </td>
                 <td>

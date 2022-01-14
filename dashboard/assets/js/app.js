@@ -1,3 +1,10 @@
+function localDateTime(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.textContent = new Date(parseInt(el.textContent) * 1000).toLocaleString();
+  }
+}
+
 function loginDashboard() {
   var uname = document.getElementById('lg_username').value;
   var upass = document.getElementById('lg_password').value;

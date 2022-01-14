@@ -131,6 +131,7 @@ class Authentication
 
 	public function updateUser($uid, $data)
 	{
+		$data['updated_at'] = time();
 		return $this->db->table($this->tableName)->set($data)->where('id', $uid)->update();
 	}
 
