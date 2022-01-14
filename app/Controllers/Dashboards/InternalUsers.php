@@ -52,6 +52,28 @@ class InternalUsers extends \App\Controllers\Base\DashboardController
 
 	public function update()
 	{
+		$json = $this->request->getJSON(true);
+		$validation = \Config\Services::validation();
+		$validation->setRules([
+			'password' => ['label' => 'Password', 'rules' => 'min_length[10]'],
+			'level' => ['label' => 'Level', 'rules' => 'less_than[256]'],
+			'status' => ['label' => 'Status', 'rules' => 'in_list[0,1]'],
+			'create_permission' => ['label' => 'Create Permission', 'rules' => 'in_list[0,1]'],
+			'read_permission' => ['label' => 'Read Permission', 'rules' => 'in_list[0,1]'],
+			'update_permission' => ['label' => 'Update Permission', 'rules' => 'in_list[0,1]'],
+			'delete_permission' => ['label' => 'Delete Permission', 'rules' => 'in_list[0,1]'],
+		]);
+		$data = [];
+		foreach ($validation->getRules() as $field => $_value) {
+			$data[$field] = $json[$field] ?? null;
+		}
+		$validation->run($data);
+		$errors = $validation->getErrors();
+		if (COUNT($errors) > 0) {
+			return $this->response->setStatusCode(400)->setJSON(['validation' => $errors]);
+		}
+		if ($this->user['id'] === $data['id'])
+			return $this->response->setStatusCode(403)->setJSON(['message' => 'Fail']);
 		return $this->response->setStatusCode(200)->setJSON(['message' => __FUNCTION__]);
 	}
 

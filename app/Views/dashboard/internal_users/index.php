@@ -82,7 +82,9 @@
                 <label class="w-100"></label>
                 <div class="row mx-1">
                   <button class="w-50 btn-sm btn-primary" type="submit" onclick="searchUser(this);" data-page="1">SEARCH</button>
+                  <?php if ((int) $__user__['create_permission'] == 1): ?>
                   <button class="w-50 btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#createUserModal">CREATE</button>
+                  <?php endif; ?>
                 </div>
               </div>
             </div>
@@ -97,9 +99,7 @@
                 <th scope="col">Metadata</th>
                 <th scope="col">Permission</th>
                 <th scope="col">Activity</th>
-                <?php if ((int) $__user__['level'] <= 0): ?>
                 <th scope="col">Action</th>
-                <?php endif; ?>
               </tr>
             </thead>
             <tbody id="users_tbody">

@@ -49,7 +49,6 @@
                     <?= $u->updated_at ?>
                   </div>
                 </td>
-                <?php if ((int) $__user__['level'] <= 0): ?>
                 <td>
                   <?php if ((int) $__user__['update_permission'] == 1): ?>
                   <div>
@@ -62,6 +61,5 @@
                   </div>
                   <?php endif; ?>
                 </td>
-                <?php endif; ?>
               </tr>
               <?php endforeach; ?>
