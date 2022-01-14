@@ -136,6 +136,9 @@ class Authentication
 
 	public function deleteUser($uid): BOOL
 	{
+		if ($this->db->table($this->tableName)->delete(['id' => $uid]) === FALSE)
+			return FALSE;
+		return TRUE;
 	}
 
 	public function updatePassword(Array $user, $oldPassword, $newPassword)

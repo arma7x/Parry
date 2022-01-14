@@ -49,5 +49,19 @@
                     <?= $u->updated_at ?>
                   </div>
                 </td>
+                <?php if ((int) $__user__['level'] <= 0): ?>
+                <td>
+                  <?php if ((int) $__user__['update_permission'] == 1): ?>
+                  <div>
+                    <button class="btn btn-block btn-sm btn-info w-100">UPDATE PASSWORD</button>
+                  </div>
+                  <?php endif; ?>
+                  <?php if ((int) $__user__['delete_permission'] == 1): ?>
+                  <div class="mt-2">
+                    <button class="btn btn-block btn-sm btn-danger w-100" onclick="deleteUser('<?= $u->id ?>', '<?= $u->username ?>')">DELETE</button>
+                  </div>
+                  <?php endif; ?>
+                </td>
+                <?php endif; ?>
               </tr>
               <?php endforeach; ?>

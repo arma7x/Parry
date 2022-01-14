@@ -18,8 +18,7 @@ $routes->get('/internal-users', 'Dashboards\InternalUsers::index', ['filter' => 
 $routes->get('/internal-users/search', 'Dashboards\InternalUsers::search', ['filter' => 'checkMinLevel:0|hasReadPerm']);
 $routes->post('/internal-users/create', 'Dashboards\InternalUsers::create', ['filter' => 'checkMinLevel:0|hasCreatePerm']);
 $routes->get('/internal-users/update', 'Dashboards\InternalUsers::update', ['filter' => 'checkMinLevel:0|hasUpdatePerm']);
-$routes->get('/internal-users/update-password', 'Dashboards\InternalUsers::updatePassword', ['filter' => 'checkMinLevel:0|hasUpdatePerm']);
-$routes->get('/internal-users/delete', 'Dashboards\InternalUsers::delete', ['filter' => 'checkMinLevel:0|hasDeletePerm']);
+$routes->post('/internal-users/delete', 'Dashboards\InternalUsers::delete', ['filter' => 'checkMinLevel:0|hasDeletePerm']);
 
 $routes->get('/firebase-users', 'Dashboards\FirebaseUsers::index', ['filter' => 'checkLoginStatus:1|checkMinLevel:0|hasReadPerm']);
 $routes->get('/firebase-users/get', 'Dashboards\FirebaseUsers::get', ['filter' => 'checkMinLevel:0|hasReadPerm']);

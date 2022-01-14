@@ -55,14 +55,27 @@ class InternalUsers extends \App\Controllers\Base\DashboardController
 		return $this->response->setStatusCode(200)->setJSON(['message' => __FUNCTION__]);
 	}
 
-	public function updatePassword()
-	{
-		return $this->response->setStatusCode(200)->setJSON(['message' => __FUNCTION__]);
-	}
-
 	public function delete()
 	{
-		return $this->response->setStatusCode(200)->setJSON(['message' => __FUNCTION__]);
+		$json = $this->request->getJSON(true);
+		$validation = \Config\Services::validation();
+		$validation->setRules([
+			'id' => ['label' => 'ID', 'rules' => 'required'],
+		]);
+		$data = [];
+		foreach ($validation->getRules() as $field => $_value) {
+			$data[$field] = $json[$field] ?? null;
+		}
+		$validation->run($data);
+		$errors = $validation->getErrors();
+		if (COUNT($errors) > 0) {
+			return $this->response->setStatusCode(400)->setJSON(['validation' => $errors]);
+		}
+		if ($this->user['id'] === $data['id'])
+			return $this->response->setStatusCode(403)->setJSON(['message' => 'Fail']);
+		if ($this->authenticator->deleteUser($data['id']) === TRUE)
+			return $this->response->setStatusCode(200)->setJSON(['message' => 'Success']);
+		return $this->response->setStatusCode(400)->setJSON(['message' => 'Fail']);
 	}
 
 	protected function _search() {

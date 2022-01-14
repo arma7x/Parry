@@ -114,3 +114,26 @@ function createUser() {
     }
   });
 }
+
+function deleteUser(id, username) {
+  if (!confirm(`Are you sure to remove ${username} ?`))
+    return;
+  var formData = {id:id}
+  axios.post('/internal-users/delete', formData)
+  .then((res) => {
+    if (res.data.message) {
+      alert(res.data.message);
+    }
+    window.location.reload();
+  })
+  .catch((err) => {
+    const validation = err.response.data.validation;
+    if (validation) {
+      alert(validation['id']);
+    } else if (err.response.data.message){
+      alert(err.response.data.message);
+    } else {
+      alert('Error');
+    }
+  });
+}

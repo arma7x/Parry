@@ -97,6 +97,9 @@
                 <th scope="col">Metadata</th>
                 <th scope="col">Permission</th>
                 <th scope="col">Activity</th>
+                <?php if ((int) $__user__['level'] <= 0): ?>
+                <th scope="col">Action</th>
+                <?php endif; ?>
               </tr>
             </thead>
             <tbody id="users_tbody">
