@@ -1,3 +1,19 @@
+function displayLoading(show = true) {
+  if (show) {
+    const el = document.getElementById('loadingModal');
+    if (el !== null && !el.classList.contains('show')) {
+      el.classList.add('show');
+      el.style.display = 'block';
+    }
+  } else {
+    const el = document.getElementById('loadingModal');
+    if (el !== null && el.classList.contains('show')) {
+      el.classList.remove('show');
+      el.style.display = 'none';
+    }
+  }
+}
+
 function localDateTime(id) {
   const el = document.getElementById(id);
   if (el) {
@@ -9,6 +25,7 @@ function loginDashboard() {
   var uname = document.getElementById('lg_username').value;
   var upass = document.getElementById('lg_password').value;
   if (uname.length > 0 && upass.length > 0) {
+    displayLoading(true);
     axios.post('/auth/login', {username: uname, password: upass})
     .then(() => {
       window.location.href = "/";
@@ -19,6 +36,9 @@ function loginDashboard() {
       } else {
         alert('Error');
       }
+    })
+    .finally(() => {
+      displayLoading(false);
     });
   }
 }
@@ -32,6 +52,7 @@ function updatePassword() {
       alert('Password not match');
       return;
     }
+    displayLoading(true);
     axios.post('/auth/update_password', {new_password: newpass, old_password: oldpass})
     .then((response) => {
       if (response.data.message) {
@@ -45,6 +66,9 @@ function updatePassword() {
       } else {
         alert('Error');
       }
+    })
+    .finally(() => {
+      displayLoading(false);
     });
   }
 }
@@ -73,6 +97,7 @@ function searchUser(scope) {
     window.history.pushState("/", "", window.location.pathname.replace(/\/$/, '') + '?' + url.searchParams.toString());
   else
     window.history.pushState("/", "", window.location.pathname.replace(/\/$/, ''));
+  displayLoading(true);
   axios.get('/internal-users/search', { params: p })
   .then((res) => {
     const tbody = document.getElementById('users_tbody');
@@ -82,6 +107,9 @@ function searchUser(scope) {
   })
   .catch((err) => {
     console.log(err);
+  })
+  .finally(() => {
+    displayLoading(false);
   });
 }
 
@@ -92,6 +120,7 @@ function createUser() {
     const key = k.replace('c_', '');
     formData[key] = document.getElementById(k).value;
   });
+  displayLoading(true);
   axios.post('/internal-users/create', formData)
   .then((res) => {
     if (res.data.message) {
@@ -119,6 +148,9 @@ function createUser() {
     } else {
       alert('Error');
     }
+  })
+  .finally(() => {
+    displayLoading(false);
   });
 }
 
@@ -131,6 +163,7 @@ function updateUser(id, username, field, input_id) {
   console.log(id, username, field, input_id);
   var formData = {id:id}
   formData[field] = el.value;
+  displayLoading(true);
   axios.post('/internal-users/update', formData)
   .then((res) => {
     if (res.data.message) {
@@ -147,6 +180,9 @@ function updateUser(id, username, field, input_id) {
     } else {
       alert('Error');
     }
+  })
+  .finally(() => {
+    displayLoading(false);
   });
 }
 
@@ -154,6 +190,7 @@ function deleteUser(id, username) {
   if (!confirm(`Are you sure to remove ${username} ?`))
     return;
   var formData = {id:id}
+  displayLoading(true);
   axios.post('/internal-users/delete', formData)
   .then((res) => {
     if (res.data.message) {
@@ -170,5 +207,8 @@ function deleteUser(id, username) {
     } else {
       alert('Error');
     }
+  })
+  .finally(() => {
+    displayLoading(false);
   });
 }

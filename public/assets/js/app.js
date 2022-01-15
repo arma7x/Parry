@@ -1,3 +1,19 @@
+function displayLoading(show = true) {
+  if (show) {
+    const el = document.getElementById('loadingModal');
+    if (el !== null && !el.classList.contains('show')) {
+      el.classList.add('show');
+      el.style.display = 'block';
+    }
+  } else {
+    const el = document.getElementById('loadingModal');
+    if (el !== null && el.classList.contains('show')) {
+      el.classList.remove('show');
+      el.style.display = 'none';
+    }
+  }
+}
+
 const firebaseConfig = {
   apiKey: "AIzaSyDYH1WBQXUgrQL3BaOBOiiFKdxLwR7cg10",
   authDomain: "parry-b18e0.firebaseapp.com",
