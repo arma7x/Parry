@@ -123,7 +123,31 @@ function createUser() {
 }
 
 function updateUser(id, username, field, input_id) {
-  
+  const el = document.getElementById(input_id);
+  if (el == null || id == null)
+    return;
+  if (!confirm(`Are you sure to update ${username} ${field.replace('_', ' ')} ?`))
+    return;
+  console.log(id, username, field, input_id);
+  var formData = {id:id}
+  formData[field] = el.value;
+  axios.post('/internal-users/update', formData)
+  .then((res) => {
+    if (res.data.message) {
+      alert(res.data.message);
+    }
+    window.location.reload();
+  })
+  .catch((err) => {
+    const validation = err.response.data.validation;
+    if (validation) {
+      alert(validation[field]);
+    } else if (err.response.data.message){
+      alert(err.response.data.message);
+    } else {
+      alert('Error');
+    }
+  });
 }
 
 function deleteUser(id, username) {

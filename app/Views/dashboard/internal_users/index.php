@@ -91,13 +91,13 @@
           </form>
         </div>
         <div class="row mt-2 p-2 table-responsive">
-          <table class="table table-bordered table-striped table-sm table-light text-dark">
+          <table class="table table-bordered table-sm table-light text-dark">
             <thead>
               <tr>
                 <th scope="col">#ID</th>
                 <th scope="col">Username/Email</th>
-                <th scope="col">Permission</th>
                 <th scope="col">Metadata</th>
+                <th scope="col">Permission</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>

@@ -28,7 +28,7 @@ class InternalUsers extends \App\Controllers\Base\DashboardController
 			'email' => ['label' => 'Email', 'rules' => 'required|valid_email'],
 			'password' => ['label' => 'Password', 'rules' => 'required|min_length[10]'],
 			'level' => ['label' => 'Level', 'rules' => 'required|less_than[256]'],
-			'status' => ['label' => 'Status', 'rules' => 'required|in_list[0,1]'],
+			'status' => ['label' => 'Status', 'rules' => 'required|in_list[-1,0,1]'],
 			'create_permission' => ['label' => 'Create Permission', 'rules' => 'required|in_list[0,1]'],
 			'read_permission' => ['label' => 'Read Permission', 'rules' => 'required|in_list[0,1]'],
 			'update_permission' => ['label' => 'Update Permission', 'rules' => 'required|in_list[0,1]'],
@@ -59,7 +59,7 @@ class InternalUsers extends \App\Controllers\Base\DashboardController
 			'id' => ['label' => 'ID', 'rules' => 'required'],
 			'password' => ['label' => 'Password', 'rules' => 'min_length[10]'],
 			'level' => ['label' => 'Level', 'rules' => 'less_than[256]'],
-			'status' => ['label' => 'Status', 'rules' => 'in_list[0,1]'],
+			'status' => ['label' => 'Status', 'rules' => 'in_list[-1,0,1]'],
 			'create_permission' => ['label' => 'Create Permission', 'rules' => 'in_list[0,1]'],
 			'read_permission' => ['label' => 'Read Permission', 'rules' => 'in_list[0,1]'],
 			'update_permission' => ['label' => 'Update Permission', 'rules' => 'in_list[0,1]'],
@@ -81,8 +81,10 @@ class InternalUsers extends \App\Controllers\Base\DashboardController
 		$uid = $data['id'];
 		if ($this->user['id'] === $uid)
 			return $this->response->setStatusCode(403)->setJSON(['message' => 'Fail']);
-		if (isset($data['password']))
-			$data['password'] = $this->authenticator->generatePasswordSafeLength($data['password']);
+		if (isset($data['password'])) {
+			$data['password_hash'] = password_hash($this->authenticator->generatePasswordSafeLength($data['password']), TRUE);
+			unset($data['password']);
+		}
 		unset($data['id']);
 		if ($this->authenticator->updateUser($uid, $data))
 			return $this->response->setStatusCode(200)->setJSON(['message' => 'Success']);
