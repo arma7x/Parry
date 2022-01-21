@@ -56,7 +56,27 @@ firebase.auth().onAuthStateChanged((user) => {
     firebaseUserName.classList.remove('d-none');
     firebaseLoginBtn.classList.add('d-none');
     firebaseLogoutBtn.classList.remove('d-none');
+    displayLoading(true);
+    getUserToken()
+    .then((token) => {
+      return axios.post('/auth/login', {token: token});
+    })
+    .then((response) => {
+      console.log(response.data.message);
+    })
+    .catch((err) => {
+      logoutFirebase();
+      if (typeof err === 'string') {
+        console.log(err);
+      } else {
+        console.log(err.response.data.message);
+      }
+    })
+    .finally(() => {
+      displayLoading(false);
+    });
   } else {
+    axios.post('/auth/logout');
     firebaseUserName.innerText = "";
     firebaseUserName.classList.add('d-none');
     firebaseLoginBtn.classList.remove('d-none');
@@ -82,10 +102,13 @@ firebase.auth().onAuthStateChanged((user) => {
 });
 
 function logoutFirebase() {
-  firebase.auth().signOut()
+  axios.post('/auth/logout')
   .finally(() => {
-    window.location.href = "/";
-  });
+    firebase.auth().signOut()
+    .finally(() => {
+      window.location.reload();
+    });
+  })
 }
 
 function getUserToken() {
