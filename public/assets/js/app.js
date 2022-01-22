@@ -31,7 +31,7 @@ const uiConfig = {
   signInOptions: [
     // Leave the lines as is for the providers you want to offer your users.
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
     // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
     // firebase.auth.GithubAuthProvider.PROVIDER_ID,
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
@@ -56,25 +56,7 @@ firebase.auth().onAuthStateChanged((user) => {
     firebaseUserName.classList.remove('d-none');
     firebaseLoginBtn.classList.add('d-none');
     firebaseLogoutBtn.classList.remove('d-none');
-    displayLoading(true);
-    getUserToken()
-    .then((token) => {
-      return axios.post('/auth/login', {token: token});
-    })
-    .then((response) => {
-      console.log(response.data.message);
-    })
-    .catch((err) => {
-      logoutFirebase();
-      if (typeof err === 'string') {
-        console.log(err);
-      } else {
-        console.log(err.response.data.message);
-      }
-    })
-    .finally(() => {
-      displayLoading(false);
-    });
+    submitToken();
   } else {
     axios.post('/auth/logout');
     firebaseUserName.innerText = "";
@@ -101,21 +83,32 @@ firebase.auth().onAuthStateChanged((user) => {
   console.log(error)
 });
 
-function logoutFirebase() {
-  axios.post('/auth/logout')
-  .finally(() => {
-    firebase.auth().signOut()
-    .finally(() => {
-      window.location.reload();
-    });
-  })
-}
-
 function getUserToken() {
   const user = firebase.auth().currentUser;
   if (user == null)
     return Promise.reject("User is null");
   return user.getIdToken();
+}
+
+function submitToken() {
+  // displayLoading(true);
+  getUserToken()
+  .then((token) => {
+    return axios.post('/auth/login', {token: token});
+  })
+  .then((response) => {
+    console.log(response.data.message);
+  })
+  .catch((err) => {
+    if (typeof err === 'string') {
+      console.log(err);
+    } else {
+      console.log(err.response.data.message);
+    }
+  })
+  .finally(() => {
+    // displayLoading(false);
+  });
 }
 
 function verifyToken() {
@@ -133,4 +126,14 @@ function verifyToken() {
       console.log(err.response.data.message);
     }
   });
+}
+
+function logoutFirebase() {
+  axios.post('/auth/logout')
+  .finally(() => {
+    firebase.auth().signOut()
+    .finally(() => {
+      window.location.reload();
+    });
+  })
 }
