@@ -11,6 +11,19 @@ use Config\Filters as FiltersConfig;
 use Config\Services as AppServices;
 use App\Libraries\Filters\Filters;
 
+use Lcobucci\Clock\SystemClock;
+use Lcobucci\JWT\Token;
+use Lcobucci\JWT\Configuration;
+use Lcobucci\JWT\Signer\Rsa\Sha256;
+use Lcobucci\JWT\Signer\Key\InMemory;
+use Lcobucci\JWT\Validation\Constraint\IssuedBy;
+use Lcobucci\JWT\Validation\Constraint\PermittedFor;
+use Lcobucci\JWT\Validation\Constraint\SignedWith;
+use Lcobucci\JWT\Validation\Constraint\ValidAt;
+use Kreait\Firebase\Util\DT;
+use Kreait\Firebase\Exception\Auth\RevokedIdToken;
+use GuzzleHttp\Client;
+
 /**
  * Services Configuration file.
  *
@@ -29,6 +42,40 @@ class Services extends BaseService
 	public static function firebase(): Factory
 	{
 		return (new Factory)->withServiceAccount(urldecode(env("FIREBASE_CREDENTIALS")));
+	}
+	public static function verifySessionCookie(String $token): Token
+	{
+		try {
+			$firebaseAuth = \Config\Services::firebase()->createAuth();
+			$client = new Client(['base_uri' => 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/publicKeys']);
+			$res = $client->get('');
+			$keys = json_decode((string) $res->getBody(), true);
+			$clock = SystemClock::fromSystemTimezone();
+			$leeway = new \DateInterval('PT300S');
+			$credential = json_decode(urldecode(env("FIREBASE_CREDENTIALS")));
+			$configuration = Configuration::forSymmetricSigner(new Sha256(), InMemory::plainText(''));
+			$verifiedToken = $configuration->parser()->parse($token);
+			$configuration->validator()->assert($verifiedToken, ...[
+					new ValidAt($clock, $leeway),
+					new PermittedFor($credential->project_id),
+					new IssuedBy(...["https://session.firebase.google.com/{$credential->project_id}"]),
+					new SignedWith($configuration->signer(), InMemory::plainText($keys[$verifiedToken->headers()->get('kid', '')])),
+			]);
+			$user = $firebaseAuth->getUser($verifiedToken->claims()->get('sub'));
+			$validSince = $user->tokensValidAfterTime;
+			if (!($validSince instanceof \DateTimeImmutable)) {
+				return $verifiedToken;
+			}
+			$tokenAuthenticatedAt = DT::toUTCDateTimeImmutable($verifiedToken->claims()->get('auth_time'));
+			$tokenAuthenticatedAtWithLeeway = $tokenAuthenticatedAt->modify('-300 seconds');
+			$validSinceWithLeeway = DT::toUTCDateTimeImmutable($validSince)->modify('-300 seconds');
+			if (!($tokenAuthenticatedAtWithLeeway->getTimestamp() < $validSinceWithLeeway->getTimestamp())) {
+				return $verifiedToken;
+			}
+			throw new RevokedIdToken($verifiedToken);
+		} catch (RequiredConstraintsViolated $e) {
+			throw new Exception($e);
+		}
 	}
 
 	public static function authenticator(BaseConnection $db, SessionInterface $session): Authentication
