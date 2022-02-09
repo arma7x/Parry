@@ -58,7 +58,7 @@ class Services extends BaseService
 			$configuration->validator()->assert($verifiedToken, ...[
 					new ValidAt($clock, $leeway),
 					new PermittedFor($credential->project_id),
-					new IssuedBy(...["https://session.firebase.google.com/{$credential->project_id}"]),
+					new IssuedBy(...["https://session.firebase.google.com/{$credential->project_id}", "https://securetoken.google.com/{$credential->project_id}"]),
 					new SignedWith($configuration->signer(), InMemory::plainText($keys[$verifiedToken->headers()->get('kid', '')])),
 			]);
 			$user = $firebaseAuth->getUser($verifiedToken->claims()->get('sub'));

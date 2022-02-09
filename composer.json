@@ -13,7 +13,7 @@
         "kint-php/kint": "^4.0",
         "laminas/laminas-escaper": "^2.9",
         "psr/log": "^1.1",
-        "kreait/firebase-php": "^5.23"
+        "kreait/firebase-php": "^6"
     },
     "require-dev": {
         "codeigniter/coding-standard": "^1.1",

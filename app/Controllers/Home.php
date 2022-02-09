@@ -6,16 +6,6 @@ class Home extends Base\PublicController
 {
 	public function index()
 	{
-		try {
-			helper('cookie');
-			$token = get_cookie('firebase_token');
-			$verifiedToken = \Config\Services::verifySessionCookie($token);
-			//var_dump($verifiedToken);
-			//die;
-		} catch (\Exception $e) {
-			var_dump($e);
-			die;
-		}
 		$this->render(['public/main/index'], ['namespace' => get_parent_class($this)]);
 	}
 
